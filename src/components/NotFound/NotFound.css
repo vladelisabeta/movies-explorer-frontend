@@ -1,0 +1,26 @@
+.not-found {}
+
+.not-found__box {}
+
+.not-found__numbers {
+    font-size: 80px;
+    margin-bottom: 10px;
+    line-height: 110%;
+}
+
+.not-found__text {
+    margin-top: 0;
+    font-size: 12px;
+    line-height: 100%;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.not-found__button-back {
+    background-color: #fff;
+    border: none;
+    font-size: 12px;
+    line-height: 105%;
+    margin-top: 284px;
+    margin-bottom: 24px;
+}

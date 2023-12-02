@@ -1,0 +1,23 @@
+.promo {}
+
+.promo__content {
+    background-color: #F3C1F8;
+    min-height: 570px;
+    display: flex;
+    align-items: center;
+    background-image: url('../../images/back_punk_logo_promo.svg');
+    background-repeat: no-repeat;
+    background-position: center 142px;
+}
+
+.promo__title {
+    letter-spacing: -0.04em;
+    font-size: 31px;
+    line-height: 39px;
+    text-align: center;
+    color: #000;
+    font-weight: 400;
+    margin: 207px auto 256px;
+}
+
+.promo {}

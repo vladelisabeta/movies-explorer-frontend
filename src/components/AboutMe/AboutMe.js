@@ -3,7 +3,7 @@ import avatar from '../../images/ApplicationFrameHost_yUJnbWaIic_waifu2x_art_noi
 
 function AboutMe() {
     return (
-        <section className='about-me'>
+        <section className='about-me' id='about-me'>
             <div className='about-me__container'>
                 <h2 className='about-me__title'>Студент</h2>
                 <div className='about-me__box'>
