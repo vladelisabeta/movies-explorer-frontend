@@ -16,6 +16,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
+import LoggedInHeader from '../LoggedInHeader/LoggedInHeader';
 import './App.css';
 
 function App() {
@@ -24,19 +25,20 @@ function App() {
       {/* <Navigation /> */}
       {/* <MoviesCardList /> */}
       {/* <MoviesCard /> */}
-      <SearchForm />
-      <FilterCheckbox />
+      {/* <LoggedInHeader /> */}
+      {/* <SearchForm /> */}
+      {/* <FilterCheckbox /> */}
       {/* <Profile /> */}
       {/* <Register /> */}
       {/* <Login /> */}
       {/* <NotFound /> */}
-      {/* <Promo />
+      <Promo />
       <NavTab />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
-      <Footer /> */}
+      <Footer />
     </div>
   );
 }

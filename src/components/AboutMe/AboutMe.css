@@ -11,7 +11,7 @@
     margin-left: 14px;
     margin-right: 14px;
     margin-bottom: 60px;
-    margin-top: 70px;
+    margin-top: 140px;
     letter-spacing: -0.04em;
 }
 
@@ -36,6 +36,7 @@
 }
 
 .about-me__occupation {
+    margin-top: 0;
     margin-left: 14px;
     margin-bottom: 20px;
     font-size: 11px;
@@ -52,6 +53,7 @@
     font-weight: 400;
     margin-bottom: 0;
     margin-right: 14px;
+    margin-top: 0;
 }
 
 .about-me__avatar {

@@ -7,3 +7,23 @@
 }
 
 .movies-card-list {}
+
+.movies-card-list__button-more {
+    background-color: #F9F9F9;
+    border-radius: 5%;
+    padding: 12px 108px;
+    border: none;
+    color: #000;
+    /* min-width: 260px; */
+    margin-top: 50px;
+    transition: opacity 0.3s linear;
+    margin-bottom: 80px;
+    font-size: 12px;
+    line-height: 105%;
+    font-weight: 500;
+}
+
+.movies-card-list__button-more:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
