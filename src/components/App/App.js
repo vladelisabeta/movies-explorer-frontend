@@ -10,12 +10,24 @@ import Promo from '../Promo/Promo';
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
+import Profile from '../Profile/Profile';
+import SearchForm from '../SearchForm/SearchForm';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import MoviesCard from '../MoviesCard/MoviesCard';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Navigation from '../Navigation/Navigation';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Register />
+      {/* <Navigation /> */}
+      {/* <MoviesCardList /> */}
+      {/* <MoviesCard /> */}
+      <SearchForm />
+      <FilterCheckbox />
+      {/* <Profile /> */}
+      {/* <Register /> */}
       {/* <Login /> */}
       {/* <NotFound /> */}
       {/* <Promo />

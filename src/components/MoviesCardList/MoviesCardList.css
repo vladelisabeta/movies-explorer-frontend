@@ -1,0 +1,9 @@
+.movies-card-list__grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.movies-card-list {}

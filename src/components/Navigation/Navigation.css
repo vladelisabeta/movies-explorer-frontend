@@ -1,0 +1,92 @@
+.navigation-menu {}
+
+.navigation-menu_opened {}
+
+.navigation-menu__button-box {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 20px;
+    margin-top: 13px;
+    margin-bottom: 100px;
+}
+
+.navigation-menu__button-close {
+    width: 22px;
+    height: 22px;
+    background-image: url('../../images/closebutton.png');
+    background-color: transparent;
+    border: none;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    padding: 0;
+    transition: opacity 0.3s linear;
+}
+
+.navigation-menu__button-close:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.navigation-menu__link-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigation-menu__link {
+    text-decoration: none;
+    font-size: 18px;
+    color: #000;
+    font-weight: 500;
+    text-align: start;
+    margin-bottom: 15px;
+    transition: opacity 0.3s linear;
+    line-height: 105%;
+}
+
+.navigation-menu__link:hover {
+    opacity: 0.7;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 7px;
+}
+
+.navigation-menu__account-box {
+    margin-top: 444px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: 0px 0px 13px #d5d5d5;
+    border-radius: 40px;
+    transition: opacity 0.3s linear;
+    height: 32px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s linear;
+    margin-bottom: 46px;
+}
+
+.navigation-menu__account-box:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+
+.navigation-menu__account {
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 12px;
+    color: #000;
+    padding-left: 11px;
+}
+
+.navigation-menu__account-icon {
+    background-image: url('../../images/accountbutton.png');
+    background-position: 50%;
+    background-repeat: no-repeat;
+    height: 26px;
+    width: 26px;
+    background-color: transparent;
+    border: none;
+    padding: 7px;
+}
