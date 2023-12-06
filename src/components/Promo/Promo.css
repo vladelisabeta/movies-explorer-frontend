@@ -5,12 +5,30 @@
     min-height: 570px;
     display: flex;
     align-items: center;
-    background-image: url('../../images/langing_logo.svg');
+    /* background-image: url('../../images/langing_logo.svg'); */
     background-repeat: no-repeat;
     background-position: center 70px;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+}
+
+.promo__text-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.promo__image {
+    margin-top: 70px;
+    display: block;
+    height: 206px;
+    width: 210px;
+}
+
+.promo__text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .promo__title {
@@ -20,7 +38,7 @@
     text-align: center;
     color: #fff;
     font-weight: 400;
-    margin: 180px auto 24px;
+    margin: 40px auto 24px;
 }
 
 .promo__text {
@@ -32,4 +50,72 @@
     max-width: 260px;
     margin-top: 0;
     margin-bottom: 80px;
+    font-weight: 400;
+}
+
+@media screen and (min-width: 768px) {
+    .promo__content {
+        /* background-image: url('../../images/promo_image_big.svg'); */
+    }
+
+    .promo__image {
+        margin-top: 140px;
+        display: block;
+        height: 304px;
+        width: 310px;
+    }
+
+    .promo__title {
+        margin-top: 48px;
+        max-width: 680px;
+        font-size: 40px;
+        line-height: 50px;
+        margin-bottom: 22px;
+    }
+
+    .promo__text {
+        font-size: 13px;
+        min-width: 260px;
+        line-height: 110%;
+        margin-bottom: 92px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+
+    .promo__content {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        padding-left: 70px;
+        padding-right: 70px;
+        min-height: 524px;
+        align-items: flex-start;
+    }
+
+    .promo__title {
+        text-align: left;
+        font-size: 50px;
+        line-height: 58px;
+        max-width: 640px;
+        margin-top: 75px;
+        margin-bottom: 36px;
+    }
+
+    .promo__image {
+        margin-top: 75px;
+        margin-bottom: 145px;
+    }
+
+    .promo__text-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .promo__text {
+        text-align: left;
+        max-width: 310px;
+        margin-bottom: 146px;
+    }
 }

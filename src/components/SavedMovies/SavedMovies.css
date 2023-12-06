@@ -8,11 +8,11 @@
 }
 
 .movie-card__preview {
-    width: 295px;
+    width: 290px;
     height: 168px;
-    margin-top: 40px;
     object-fit: cover;
     display: block;
+    margin: 0 auto 0;
 }
 
 .movie-card__button-delete {

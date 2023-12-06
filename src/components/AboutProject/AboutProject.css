@@ -9,12 +9,13 @@
 .about-project__title {
     font-size: 18px;
     font-weight: 400;
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #000;
     padding-bottom: 28px;
     text-align: start;
     margin-bottom: 60px;
     margin-top: 70px;
     letter-spacing: -0.04em;
+    line-height: 105%;
 }
 
 .about-project__subtitle {
@@ -45,7 +46,7 @@
 .about-project__time-spent-table-front {
     background-color: #2BE080;
     height: 35px;
-    width: 100px;
+    min-width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +55,7 @@
 .about-project__time-spent-table-back {
     background-color: #F2F2F2;
     height: 35px;
-    width: 177px;
+    min-width: 177px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,11 +67,93 @@
 }
 
 .about-project__time-text-back {
-    color: #fff;
+    color: #000;
     font-size: 11px;
 }
 
 .about-project__time-text-front {
     color: #000;
     font-size: 11px;
+}
+
+
+@media screen and (min-width: 768px) {
+    .about-project__content {
+        margin: 0px 50px 0;
+    }
+
+    .about-project__title {
+        margin-top: 90px;
+        padding-bottom: 23px;
+        margin-bottom: 70px;
+        font-size: 27px;
+    }
+
+    .about-project__time-spent-table-front {
+        z-index: 1;
+        height: 36px;
+        min-width: 140px;
+    }
+
+    .about-project__time-spent-table-back {
+        min-width: 528px;
+        height: 36px;
+    }
+
+    .about-project__time-box {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        margin-top: 4px;
+        margin-bottom: 90px;
+    }
+
+    .about-project__time-text-back {
+        font-size: 14px;
+    }
+
+    .about-project__time-text-front {
+        font-size: 14px;
+    }
+
+    .about-project__text-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 30px;
+    }
+
+    .about-project__subtitle {
+        min-width: 319px;
+        font-size: 20px;
+    }
+
+    .about-project__text {
+        min-width: 319px;
+        font-size: 12px;
+    }
+
+    .about-project__production-text {
+        margin-bottom: 0px;
+    }
+
+    .about-project__content {}
+}
+
+@media screen and (min-width: 1280px) {
+    .about-project__time-spent-table-back {
+        min-width: 912px;
+    }
+
+    .about-project__time-spent-table-front {
+        min-width: 228px;
+    }
+
+    .about-project__time-box {
+        grid-template-columns: 228px 1fr;
+    }
+
+    .about-project__text {
+        min-width: 550px;
+        font-size: 14px;
+        line-height: 20px;
+    }
 }

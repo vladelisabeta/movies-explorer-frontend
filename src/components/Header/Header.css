@@ -1,0 +1,96 @@
+.header {
+    background-color: #073042;
+    height: 74px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__box {}
+
+.header__link-box {}
+
+.header__logo {
+    display: block;
+    background-color: transparent;
+    width: 38px;
+    height: 38px;
+    margin-left: 14px;
+}
+
+.header__link-logo {
+    text-decoration: none;
+}
+
+.header__link-logo:hover {
+    cursor: pointer;
+}
+
+.header__signup-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
+    margin-top: 18px;
+    margin-right: 14px;
+    transition: opacity 0.3s linear;
+}
+
+.header__signup-link:hover {
+    opacity: 0.7;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.header__login-button {
+    background-color: #2BE080;
+    color: #000;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
+    text-align: center;
+    border: none;
+    border-radius: 5%;
+    margin-right: 14px;
+    margin-top: 24px;
+    transition: opacity 0.3s linear;
+    text-decoration: none;
+    padding: 7px 12px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.header__login-button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin-left: 30px;
+    }
+
+    .header__signup-link {
+        font-size: 12px;
+        margin-right: 30px;
+    }
+
+    .header__login-button {
+        font-size: 12px;
+        padding: 9px 21px;
+        margin-right: 30px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .header__logo {
+        margin-left: 70px;
+        margin-top: 18px;
+    }
+
+    .header__login-button {
+        margin-top: 18px;
+        margin-right: 70px;
+    }
+}

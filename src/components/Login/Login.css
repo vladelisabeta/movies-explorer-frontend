@@ -3,11 +3,10 @@
 .login__box {}
 
 .login__link-logo {
-    transition: opacity 0.3s linear;
+    text-decoration: none;
 }
 
 .login__link-logo:hover {
-    opacity: 0.7;
     cursor: pointer;
 }
 
@@ -43,22 +42,33 @@
 }
 
 .form__input {
-    background-color: #F9F9F9;
+    background-color: #fff;
     border: none;
-    border-radius: 5%;
-    height: 46px;
-    min-width: 260px;
-    margin-top: 10px;
+    height: 32px;
+    min-width: 250px;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 105%;
+    border-bottom: solid 1px #E8E8E8;
+}
+
+.form__input_password {
+    color: #FF3055;
 }
 
 .form__submit-button {
-    background-color: #000;
+    background-color: #3456F3;
     border-radius: 5%;
-    padding: 12px 104px;
-    min-width: 260px;
+    padding: 12px 47px;
     color: #fff;
-    margin-top: 247px;
+    margin-top: 220px;
     transition: opacity 0.3s linear;
+    font-size: 12px;
+    font-weight: 500;
+    border: none;
+    /* height: 45px;
+    width: 260px; */
 }
 
 .form__submit-button:hover {
@@ -96,4 +106,66 @@
 .login__link:hover {
     opacity: 0.7;
     cursor: pointer;
+}
+
+
+@media screen and (min-width: 768px) {
+    .login__box {
+        display: flex;
+        flex-direction: column;
+        margin-left: 174px;
+        align-items: flex-start;
+    }
+
+    .login__link-logo-image {
+        margin-top: 232px;
+        margin-bottom: 40px;
+    }
+
+    .login__title {
+        margin-bottom: 40px;
+    }
+
+    .form__input {
+        min-width: 396px;
+    }
+
+    .form {
+        margin: 0 186px 0;
+        gap: 24px;
+    }
+
+    .form__submit-button {
+        margin-top: 197px;
+        /* padding: 16px 180px; */
+        border-radius: 4px;
+        width: 396px;
+        padding: 15px;
+    }
+
+    .login__link-box {
+        margin-top: 16px;
+        margin-bottom: 232px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .login__box {
+        margin-left: 442px;
+        margin-top: 70px;
+    }
+
+    .login__link-logo-image {
+        margin-top: 0;
+        margin-bottom: 40px;
+    }
+
+    .form {
+        margin-left: 442px;
+        margin-right: 442px;
+    }
+
+    .login__link-box {
+        margin-bottom: 70px;
+    }
 }

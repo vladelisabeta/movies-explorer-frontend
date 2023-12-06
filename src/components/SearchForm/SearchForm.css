@@ -3,7 +3,7 @@
 .search-form__form {
     height: 57px;
     border: none;
-    min-width: 300px;
+    min-width: 226px;
     margin: 90px 10px 46px;
     display: flex;
     align-items: center;
@@ -15,7 +15,7 @@
     font-size: 18px;
     font-weight: 500;
     line-height: 105%;
-    min-width: 235px;
+    min-width: 228px;
     height: 40px;
     border: none;
     padding: 0;
@@ -31,7 +31,7 @@
     border: none;
     border-radius: 40px;
     transition: opacity 0.3s linear;
-    padding: 11px 13px;
+    padding: 8px 13px;
 }
 
 .search-form__input-button:hover {
@@ -40,3 +40,19 @@
 }
 
 .search-form__box {}
+
+@media screen and (min-width: 768px) {
+    .search-form__form {
+        margin: 80px 30px 52px;
+    }
+
+    .search-form__input {
+        font-size: 28px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .search-form__form {
+        margin: 70px 70px 32px;
+    }
+}

@@ -4,17 +4,9 @@ function NavTab() {
     return (
         <nav className='nav-tab'>
             <div className='nav-tab__box'>
-                <ul className='nav-tab__list'>
-                    <li className='nav-tab__item'>
-                        <a className='nav-tab__link' href='#about-project'>О проекте</a>
-                    </li>
-                    <li className='nav-tab__item'>
-                        <a className='nav-tab__link' href='#techs'>Технологии</a>
-                    </li>
-                    <li className='nav-tab__item'>
-                        <a className='nav-tab__link' href='#about-me'>Студент</a>
-                    </li>
-                </ul>
+                <a className='nav-tab__link' href='#about-me'>
+                    <div className='nav-tab__link-container'>Узнать больше</div>
+                </a>
             </div>
         </nav>
     )

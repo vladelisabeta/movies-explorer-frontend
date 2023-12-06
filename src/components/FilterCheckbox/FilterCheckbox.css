@@ -55,8 +55,32 @@
 }
 
 .filter-checkbox__container {
-    margin: 0 auto;
+    margin: 0 auto 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    .filter-checkbox__container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-right: 31px;
+        margin-bottom: 61px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .filter-checkbox__container {
+        margin-left: 70px;
+        margin-bottom: 48px;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+
+    .filter-checkbox__switch-text {
+        margin-left: 14px;
+    }
 }
