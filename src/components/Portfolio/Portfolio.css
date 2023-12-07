@@ -9,6 +9,8 @@
     margin-bottom: 19px;
     transition: opacity 0.3s linear;
     letter-spacing: -0.04em;
+    display: flex;
+    justify-content: space-between;
 }
 
 .portfolio__link:hover {
@@ -40,9 +42,6 @@
 
 .portfolio__slot {
     font-size: 18px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin-left: 14px;
     letter-spacing: -0.04em;
     min-width: 250px;

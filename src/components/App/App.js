@@ -18,6 +18,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
 import LoggedInHeader from '../LoggedInHeader/LoggedInHeader';
 import Header from '../Header/Header';
+import Main from '../Main/Main';
 import './App.css';
 import SavedMovies from '../SavedMovies/SavedMovies';
 
@@ -35,19 +36,13 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <Routes>
 
         {/* лендинг */}
         <Route path='/' element={
           <>
-            <Header />
-            <Promo />
-            <NavTab />
-            <AboutProject />
-            <Techs />
-            <AboutMe />
-            <Portfolio />
+            <Main />
             <Footer />
           </>
         } />

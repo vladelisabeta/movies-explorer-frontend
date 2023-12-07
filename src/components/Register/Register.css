@@ -107,8 +107,14 @@
     .login__box {
         display: flex;
         flex-direction: column;
-        margin-left: 174px;
         align-items: flex-start;
+        margin-right: 250px;
+    }
+
+    .login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .login__link-logo-image {
@@ -131,7 +137,6 @@
 
     .form__submit-button-signup {
         margin-top: 128px;
-        /* padding: 16px 180px; */
         width: 396px;
         border-radius: 4px;
         font-size: 14px;
@@ -154,7 +159,6 @@
 
 @media screen and (min-width: 1280px) {
     .login__box {
-        margin-left: 442px;
         margin-top: 70px;
     }
 

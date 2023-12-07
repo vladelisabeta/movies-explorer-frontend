@@ -2,7 +2,7 @@ import './FilterCheckbox.css'
 
 function FilterCheckbox() {
     return (
-        <div class="filter-checkbox__container">
+        <div class="filter-checkbox">
             <p className='filter-checkbox__switch-text'>Короткометражки</p>
             <label class="filter-checkbox__switch" for="checkbox">
                 <input type="checkbox" id="checkbox" className='filter-checkbox__input' />

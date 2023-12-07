@@ -110,11 +110,17 @@
 
 
 @media screen and (min-width: 768px) {
+    .login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .login__box {
         display: flex;
         flex-direction: column;
-        margin-left: 174px;
         align-items: flex-start;
+        margin-right: 250px;
     }
 
     .login__link-logo-image {
@@ -131,13 +137,12 @@
     }
 
     .form {
-        margin: 0 186px 0;
         gap: 24px;
+        max-width: 400px;
     }
 
     .form__submit-button {
         margin-top: 197px;
-        /* padding: 16px 180px; */
         border-radius: 4px;
         width: 396px;
         padding: 15px;
@@ -151,7 +156,6 @@
 
 @media screen and (min-width: 1280px) {
     .login__box {
-        margin-left: 442px;
         margin-top: 70px;
     }
 
