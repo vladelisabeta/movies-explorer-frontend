@@ -3,6 +3,9 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import SavedMovies from '../SavedMovies/SavedMovies';
 
 const pathname = window.location.pathname;
+const buttoneName = 'movies-card-list__button-more';
+const buttonModifiedName = pathname === '/saved-movies' ? 'movies-card-list__button-more_hidden' : '';
+const isHiddenButton = `${buttoneName} ${buttonModifiedName}`
 
 function MoviesCardList() {
     return (
@@ -24,7 +27,7 @@ function MoviesCardList() {
                     <SavedMovies></SavedMovies> */}
                 </ul>
                 <div className='movies-card-list__button-box'>
-                    <button type='button' className={pathname === '/movies' ? 'movies-card-list__button-more' : 'movies-card-list__button-more_hidden'}>Ещё</button>
+                    <button type='button' className={isHiddenButton}>Ещё</button>
                 </div>
             </div>
 

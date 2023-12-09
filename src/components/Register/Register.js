@@ -5,7 +5,7 @@ import logo from '../../images/logo__COLOR_green.svg'
 function Register() {
     return (
         <section className='login'>
-            <div className='login__box'>
+            <div className='login__box login__box_signup'>
                 <Link to='/' className='login__link-logo'>
                     <img src={logo} className='login__link-logo-image' alt='зеленое кольцо - лого проекта'></img>
                 </Link>

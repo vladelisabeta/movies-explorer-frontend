@@ -1,4 +1,4 @@
-import Header from '../Header/Header';
+
 import Portfolio from '../Portfolio/Portfolio';
 import AboutMe from '../AboutMe/AboutMe';
 import Techs from '../Techs/Techs';
@@ -9,7 +9,6 @@ import Promo from '../Promo/Promo';
 function Main() {
     return (
         <main className='main'>
-            <Header />
             <Promo />
             <NavTab />
             <AboutProject />

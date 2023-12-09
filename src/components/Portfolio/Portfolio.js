@@ -7,17 +7,17 @@ function Portfolio() {
             <ul className='portfolio__list'>
                 <li className='portfolio__slot'>
                     <a href='https://github.com/vladelisabeta/how-to-learn' className='portfolio__link' target="_blank" rel="noopener noreferrer">Статичный сайт
-                        <button className='portfolio__arrow-button' type='button'></button>
+                        <span class="portfolio__arrow-symbol">↗</span>
                     </a>
                 </li>
                 <li className='portfolio__slot'>
                     <a href='https://github.com/vladelisabeta/russian-travel' className='portfolio__link' target="_blank" rel="noopener noreferrer">Адаптивный сайт
-                        <button className='portfolio__arrow-button' type='button'></button>
+                        <span class="portfolio__arrow-symbol">↗</span>
                     </a>
                 </li>
                 <li className='portfolio__slot'>
                     <a href='https://github.com/vladelisabeta/mesto-react' className='portfolio__link' target="_blank" rel="noopener noreferrer">Одностраничное приложение
-                        <button className='portfolio__arrow-button' type='button'></button>
+                        <span class="portfolio__arrow-symbol">↗</span>
                     </a>
                 </li>
             </ul>

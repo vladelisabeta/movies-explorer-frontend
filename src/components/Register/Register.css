@@ -63,9 +63,10 @@
     font-size: 12px;
     font-weight: 500;
     border: none;
+    width: 260px;
 }
 
-.form__submit-button:hover {
+.form__submit-button-signup:hover {
     opacity: 0.8;
     cursor: pointer;
 }
@@ -104,11 +105,11 @@
 
 
 @media screen and (min-width: 768px) {
-    .login__box {
+    .login__box_signup {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-right: 250px;
+        margin-right: 170px;
     }
 
     .login {
@@ -131,8 +132,10 @@
     }
 
     .form {
-        margin: 0 186px 0;
+        /* margin: 0 186px 0;
+        gap: 24px; */
         gap: 24px;
+        max-width: 400px;
     }
 
     .form__submit-button-signup {
@@ -158,7 +161,7 @@
 }
 
 @media screen and (min-width: 1280px) {
-    .login__box {
+    .login__box_signup {
         margin-top: 70px;
     }
 

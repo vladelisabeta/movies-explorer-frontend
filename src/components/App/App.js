@@ -42,6 +42,7 @@ function App() {
         {/* лендинг */}
         <Route path='/' element={
           <>
+            <Header />
             <Main />
             <Footer />
           </>
