@@ -1,5 +1,5 @@
 .techs {
-    background-color: #F5F5F5;
+    background-color: #fff;
 }
 
 .techs__content {
@@ -58,6 +58,10 @@
 }
 
 @media screen and (min-width: 768px) {
+    .techs {
+        background-color: #F5F5F5
+    }
+
     .techs__title {
         padding-top: 90px;
         margin-top: 0;
