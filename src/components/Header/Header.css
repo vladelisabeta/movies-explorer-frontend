@@ -1,12 +1,21 @@
 .header {
     background-color: #073042;
+    /* height: 74px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; */
+    display: flex;
+    justify-content: center;
+}
+
+.header__box {
     height: 74px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1280px;
+    width: 100%;
 }
-
-.header__box {}
 
 .header__link-box {}
 
@@ -91,6 +100,6 @@
 
     .header__login-button {
         margin-top: 18px;
-        margin-right: 70px;
+        margin-right: 60px;
     }
 }

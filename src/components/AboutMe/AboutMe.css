@@ -1,6 +1,8 @@
 .about-me {}
 
-.about-me__container {}
+.about-me__container {
+    max-width: 1140px;
+}
 
 .about-me__title {
     font-size: 18px;
@@ -137,6 +139,10 @@
         justify-content: space-between;
     }
 
+    .about-me__container {
+        margin: 0 auto;
+    }
+
     .about-me__title-name {
         font-size: 50px;
         line-height: 58px;
@@ -158,5 +164,16 @@
     .about-me__github {
         margin-top: 99px;
         font-size: 14px;
+    }
+
+    .about-me__title {
+        margin-left: 0;
+        margin-right: 0;
+        font-size: 22px;
+    }
+
+    .about-me__box {
+        padding-left: 0;
+        padding-right: 0;
     }
 }

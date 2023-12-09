@@ -1,6 +1,8 @@
 .not-found {}
 
-.not-found__box {}
+.not-found__box {
+    max-width: 1280px;
+}
 
 .not-found__numbers {
     font-size: 80px;

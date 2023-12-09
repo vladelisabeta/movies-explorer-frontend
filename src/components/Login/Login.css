@@ -1,6 +1,8 @@
 .login {}
 
-.login__box {}
+.login__box {
+    max-width: 1280px;
+}
 
 .login__link-logo {
     text-decoration: none;

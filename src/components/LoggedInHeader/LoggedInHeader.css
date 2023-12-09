@@ -1,14 +1,15 @@
 .header-logged-in {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex; */
+    /* justify-content: space-between; */
     height: 74px;
 }
 
-/* .header-logged-in__box {
+.header-logged-in__box {
     display: flex;
     justify-content: space-between;
     height: 74px;
-} */
+    max-width: 1280px;
+}
 
 .header-logged-in__logo {
     display: block;
@@ -59,12 +60,16 @@
 }
 
 @media screen and (min-width: 1280px) {
+
     .header-logged-in__menu-button {
-        display: none;
+        /* display: none; */
+        visibility: hidden;
+        opacity: 0;
     }
 
     .header-logged-in__link-logo {
         z-index: 1;
+        margin-left: 70px;
     }
 
     .header-logged-in__logo {

@@ -1,3 +1,7 @@
+.profile {
+    max-width: 1280px;
+}
+
 .profile__box {
     display: flex;
     flex-direction: column;
@@ -131,5 +135,9 @@
 @media screen and (min-width: 1280px) {
     .profile__logout-button {
         margin-bottom: 70px;
+    }
+
+    .profile {
+        margin: 0 auto;
     }
 }

@@ -1,9 +1,12 @@
-.nav-tab {}
+.nav-tab {
+    background-color: #073042;
+}
 
 .nav-tab__box {
-    background-color: #073042;
+    /* background-color: #073042; */
     display: flex;
     justify-content: center;
+    max-width: 1280px;
 }
 
 .nav-tab__link {
@@ -44,9 +47,17 @@
 
 @media screen and (min-width: 1280px) {
     .nav-tab__box {
-        padding-left: 70px;
+        padding-left: 0;
         display: flex;
         justify-content: flex-start;
-        margin-bottom: 75px;
+        max-width: 1280px;
+        /* margin-bottom: 75px; */
+        margin: 0 auto;
     }
+
+    .nav-tab__link {
+        width: 1200px;
+        margin-left: 70px;
+    }
+
 }

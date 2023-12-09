@@ -1,4 +1,11 @@
-.promo {}
+.promo {
+    background-color: #073042;
+}
+
+.promo__box {
+    max-width: 1280px;
+    margin: 0 auto;
+}
 
 .promo__content {
     background-color: #073042;

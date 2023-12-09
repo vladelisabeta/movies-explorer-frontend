@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: solid 1px #E8E8E8;
+    max-width: 1140px;
 }
 
 .search-form__input {
@@ -53,6 +54,6 @@
 
 @media screen and (min-width: 1280px) {
     .search-form__form {
-        margin: 70px 70px 32px;
+        margin: 70px auto 32px;
     }
 }

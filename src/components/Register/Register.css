@@ -1,3 +1,7 @@
+.login {
+    max-width: 1280px;
+}
+
 .login__link-logo {
     text-decoration: none;
 }

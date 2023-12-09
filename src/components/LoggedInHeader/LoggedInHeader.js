@@ -6,16 +6,16 @@ import Navigation from '../Navigation/Navigation';
 function LoggedInHeader({ isOpen, onClose, onClickMenu }) {
     return (
         <header className='header-logged-in'>
-            {/* <div className='header-logged-in__box'> */}
-            <Link to='/' className='header-logged-in__link-logo'>
-                <img alt='зеленое кольцо - лого проекта' src={logo} className='header-logged-in__logo'></img>
-            </Link>
-            <button type='button' className='header-logged-in__menu-button' onClick={onClickMenu}></button>
-            <Navigation
-                isOpen={isOpen}
-                onClose={onClose}
-            />
-            {/* </div> */}
+            <div className='header-logged-in__box'>
+                <Link to='/' className='header-logged-in__link-logo'>
+                    <img alt='зеленое кольцо - лого проекта' src={logo} className='header-logged-in__logo'></img>
+                </Link>
+                <button type='button' className='header-logged-in__menu-button' onClick={onClickMenu}></button>
+                <Navigation
+                    isOpen={isOpen}
+                    onClose={onClose}
+                />
+            </div>
         </header>
     )
 }

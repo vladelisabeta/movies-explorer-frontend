@@ -6,6 +6,10 @@
     padding: 0;
 }
 
+.movies-card-list__box {
+    max-width: 1140px;
+}
+
 .movies-card-list {}
 
 .movies-card-list__button-more {
@@ -63,6 +67,7 @@
 
     .movies-card-list__box {
         padding: 70px 70px 0;
+        margin: 0 auto;
     }
 
     .movies-card-list__button-more {
