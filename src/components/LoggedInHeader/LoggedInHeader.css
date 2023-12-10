@@ -69,10 +69,21 @@
 
     .header-logged-in__link-logo {
         z-index: 1;
-        margin-left: 70px;
+        /* margin-left: 70px; */
+        margin-left: 0;
     }
 
     .header-logged-in__logo {
         margin-left: 0;
     }
+
+    .header-logged-in__box {
+        width: calc(100% - 70px);
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        max-width: 1140px;
+        justify-content: space-between;
+    }
+
 }

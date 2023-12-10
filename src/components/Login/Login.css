@@ -158,6 +158,10 @@
 }
 
 @media screen and (min-width: 1280px) {
+    .login {
+        margin: 0 auto;
+    }
+
     .login__box {
         margin-top: 70px;
     }

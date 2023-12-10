@@ -182,4 +182,8 @@
     .login__link-box {
         margin-bottom: 70px;
     }
+
+    .login {
+        margin: 0 auto;
+    }
 }
