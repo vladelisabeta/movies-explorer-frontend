@@ -53,6 +53,15 @@
     border-bottom: solid 1px #E8E8E8;
 }
 
+.form__input-error {
+    color: #FF3055;
+    font-size: 10px;
+    line-height: 105%;
+    margin-top: 6px;
+}
+
+.form__api-error-message {}
+
 .form__input_password {
     color: #FF3055;
 }

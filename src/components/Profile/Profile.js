@@ -1,6 +1,6 @@
 import './Profile.css'
 
-function Profile() {
+function Profile({ onLogOut }) {
     return (
         <section className='profile'>
             <div className='profile__box'>
@@ -17,7 +17,7 @@ function Profile() {
                 </form>
                 <div className='profile__button-box'>
                     <button type='button' className='profile__edit-button'>Редактировать</button>
-                    <button type='button' className='profile__logout-button'>Выйти из аккаунта</button>
+                    <button type='button' className='profile__logout-button' onClick={onLogOut}>Выйти из аккаунта</button>
                 </div>
             </div>
         </section>
