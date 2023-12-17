@@ -1,4 +1,4 @@
-// import { BASE_URL_MAIN_API } from "./consts.js";
+import { BASE_URL_MAIN_API } from "./consts.js";
 
 export class MainApi {
     constructor({ baseUrl, headers }) {

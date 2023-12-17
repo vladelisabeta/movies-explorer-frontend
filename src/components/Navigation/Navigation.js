@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom';
-import './Navigation.css'
+import { Link, useLocation } from 'react-router-dom';
+import './Navigation.css';
 
 function Navigation({ onClose, isOpen }) {
-    const popupStatusClassName = `navigation-menu  ${isOpen ? 'navigation-menu_opened' : ''}`
+    const popupStatusClassName = `navigation-menu  ${isOpen ? 'navigation-menu_opened' : ''}`;
+    const location = useLocation();
+    const mainMenuBoxClassName = `navigation-menu__button-box ${location.pathname === '/' ? 'navigation-menu__box_main' : null}`;
+    const mainLinkClassName = `navigation-menu__link ${location.pathname === '/' ? 'navigation-menu__link_main' : null}`;
+    const mainAccountBoxClassName = `navigation-menu__account-box ${location.pathname === '/' ? 'navigation-menu__account-box_main' : null}`;
+    const mainAccountClassName = `navigation-menu__account ${location.pathname === '/' ? 'navigation-menu__account_main' : null}`
 
     return (
         <div className={popupStatusClassName}>

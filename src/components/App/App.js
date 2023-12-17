@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 // это надо
 
 // import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 // import { currentUserContext } from '../contexts/CurrentUserContext';
 import Footer from '../Footer/Footer';
 
@@ -20,6 +21,7 @@ import './App.css';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { MainApi } from '../../utils/MainApi';
 import { MoviesApi } from '../../utils/MoviesApi.js';
+// import { mainApi } from '../../utils/MainApi';
 import { BASE_URL_MAIN_API, BASE_URL_MOVIES_API } from '../../utils/consts.js'
 
 function App() {
@@ -42,15 +44,15 @@ function App() {
   // стейты 
 
   //  стейт логина
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   //  стейт юзера 
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState({});
 
   //  стейт фильмов
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState([]);
 
   // стейт прелоадера
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
 
   // временное решение меню ??????
@@ -59,12 +61,50 @@ function App() {
   //  упрощенная запись 
   const navigate = useNavigate();
 
-  // основная логика
+
+
+  //  юз эффекты
+  // проверка и установка излоггед ин
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi.getToken();
+    }
+  }, [isLoggedIn]);
+
+
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    console.log('jwt: первый джвт ', jwt);
+
+    if (jwt) {
+      mainApi
+        .checkToken(jwt)
+        .then((res) => {
+          setIsLoggedIn(true);
+          setIsLoading(false)
+          // navigate("/movies");
+          console.log(res)
+          console.log('isLoggedIn в конце юз эффект 2 что залогинено:', isLoggedIn);
+        })
+        .catch((err) => {
+          console.log(err);
+          handleLogOut();
+        });
+    } else {
+      setIsLoggedIn(false);
+      setIsLoading(false);
+    }
+
+  }, []);
+
+
+  // основная логика в функциях
 
   function handleLoginUser(email, password) {
+    setIsLoading(true)
     mainApi.signInUser(email, password)
       .then((res) => {
-        localStorage.setItem("jwt", res.token);
+        localStorage.setItem('jwt', res.token);
         console.log(res.token)
         setIsLoggedIn(true);
         // setEmail(email)
@@ -73,6 +113,9 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   function handleRegistrationUser(name, email, password) {
@@ -91,6 +134,7 @@ function App() {
   function handleLogOut() {
     console.log('jwt успешно удален')
     localStorage.removeItem("jwt");
+    console.log('произошел выход из учетной записи')
     setIsLoggedIn(false);
     navigate('/signin');
     // setEmail('')
@@ -114,7 +158,11 @@ function App() {
         {/* лендинг */}
         <Route path='/' element={
           <>
-            <Header />
+            <Header
+              isLoggedIn={isLoggedIn}
+              isOpen={isMenuPopupOpen}
+              onClose={closeMenuPopup}
+              onClickMenu={handleMenuPopupOpen} />
             <Main />
             <Footer />
           </>
@@ -122,49 +170,49 @@ function App() {
         {/* фильмы роут */}
         <Route path='/movies' element={
           <>
-            {/* <ProtectedRoute loggedIn={isLoggedIn}> */}
-            <LoggedInHeader
-              isOpen={isMenuPopupOpen}
-              onClose={closeMenuPopup}
-              onClickMenu={handleMenuPopupOpen}
-            />
-            <SearchForm />
-            <FilterCheckbox />
-            <MoviesCardList />
-            <Footer />
-            {/* </ProtectedRoute> */}
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <LoggedInHeader
+                isOpen={isMenuPopupOpen}
+                onClose={closeMenuPopup}
+                onClickMenu={handleMenuPopupOpen}
+              />
+              <SearchForm />
+              <FilterCheckbox />
+              <MoviesCardList />
+              <Footer />
+            </ProtectedRoute>
           </>
         } />
         {/* сохраненные фильмы роут */}
         <Route path='/saved-movies' element={
           <>
-            {/* <ProtectedRoute loggedIn={isLoggedIn}> */}
-            <LoggedInHeader
-              isOpen={isMenuPopupOpen}
-              onClose={closeMenuPopup}
-              onClickMenu={handleMenuPopupOpen}
-            />
-            <SearchForm />
-            <FilterCheckbox />
-            <SavedMovies />
-            <Footer />
-            {/* </ProtectedRoute> */}
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <LoggedInHeader
+                isOpen={isMenuPopupOpen}
+                onClose={closeMenuPopup}
+                onClickMenu={handleMenuPopupOpen}
+              />
+              <SearchForm />
+              <FilterCheckbox />
+              <SavedMovies />
+              <Footer />
+            </ProtectedRoute>
           </>
 
         } />
         {/* профайл роут */}
         <Route path='/profile' element={
           <>
-            {/* <ProtectedRoute loggedIn={isLoggedIn}> */}
-            <LoggedInHeader
-              isOpen={isMenuPopupOpen}
-              onClose={closeMenuPopup}
-              onClickMenu={handleMenuPopupOpen}
-            />
-            <Profile
-              onLogOut={handleLogOut}
-            />
-            {/* </ProtectedRoute> */}
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <LoggedInHeader
+                isOpen={isMenuPopupOpen}
+                onClose={closeMenuPopup}
+                onClickMenu={handleMenuPopupOpen}
+              />
+              <Profile
+                onLogOut={handleLogOut}
+              />
+            </ProtectedRoute>
           </>
         } />
         {/* авторизация роут (логин) */}
