@@ -4,8 +4,9 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 // import ProtectedRoute from './ProtectedRoute';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
-// import { currentUserContext } from '../contexts/CurrentUserContext';
+import { currentUserContext } from '../../contexts/CurrentUserContext.js';
 import Footer from '../Footer/Footer';
+import Preloader from '../Preloader/Preloader.js';
 
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
@@ -48,6 +49,7 @@ function App() {
   //  стейт юзера 
   const [currentUser, setCurrentUser] = useState({});
 
+  const [loadingPage, setLoadingPage] = useState(true);
   //  стейт фильмов
   const [movies, setMovies] = useState([]);
 
@@ -67,7 +69,18 @@ function App() {
   // проверка и установка излоггед ин
   useEffect(() => {
     if (isLoggedIn) {
+      setIsLoading(true);
       mainApi.getToken();
+      Promise.all([mainApi.getUserProfile()])
+        .then(([userData]) => {
+          setCurrentUser(userData)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
     }
   }, [isLoggedIn]);
 
@@ -77,6 +90,7 @@ function App() {
     console.log('jwt: первый джвт ', jwt);
 
     if (jwt) {
+      setIsLoading(true)
       mainApi
         .checkToken(jwt)
         .then((res) => {
@@ -89,11 +103,15 @@ function App() {
         .catch((err) => {
           console.log(err);
           handleLogOut();
-        });
-    } else {
-      setIsLoggedIn(false);
-      setIsLoading(false);
+        })
+        .finally(() =>
+          setIsLoading(false)
+        )
     }
+    // else {
+    //   setIsLoggedIn(false);
+    //   setIsLoading(false);
+    // }
 
   }, []);
 
@@ -119,15 +137,21 @@ function App() {
   }
 
   function handleRegistrationUser(name, email, password) {
+    setIsLoading(true);
     mainApi.signUpUser(name, email, password)
       .then((res) => {
         handleLoginUser()
         console.log('регистрация прошла успешно')
+        // setIsLoggedIn(true)
         navigate('/signin')
+        setIsLoggedIn(true)
         console.log(res)
       })
       .catch((err) => {
         console.log(err)
+      })
+      .finally(() => {
+        setIsLoading(false);
       })
   }
 
@@ -138,6 +162,18 @@ function App() {
     setIsLoggedIn(false);
     navigate('/signin');
     // setEmail('')
+  }
+
+  function handleUserProfileEdit(userData) {
+    const jwt = localStorage.getItem('jwt');
+    setIsLoading(true)
+    console.log(userData, 'в хендл профайл едит')
+    mainApi.editProfile(userData, jwt)
+      .then((newUserData) => {
+        setCurrentUser(newUserData);
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`))
+      .finally(() => setIsLoading(false));
   }
 
 
@@ -151,85 +187,88 @@ function App() {
   }
 
   return (
-    // <currentUserContext.Provider value={currentUser}>
-    <div className="app">
-      <Routes>
+    <currentUserContext.Provider value={currentUser}>
+      <div className="app">
+        {/* {loadingPage ? (<Preloader />) : ( */}
+        <Routes>
 
-        {/* лендинг */}
-        <Route path='/' element={
-          <>
-            <Header
-              isLoggedIn={isLoggedIn}
-              isOpen={isMenuPopupOpen}
-              onClose={closeMenuPopup}
-              onClickMenu={handleMenuPopupOpen} />
-            <Main />
-            <Footer />
-          </>
-        } />
-        {/* фильмы роут */}
-        <Route path='/movies' element={
-          <>
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <LoggedInHeader
+          {/* лендинг */}
+          <Route path='/' element={
+            <>
+              <Header
+                isLoggedIn={isLoggedIn}
                 isOpen={isMenuPopupOpen}
                 onClose={closeMenuPopup}
-                onClickMenu={handleMenuPopupOpen}
-              />
-              <SearchForm />
-              <FilterCheckbox />
-              <MoviesCardList />
+                onClickMenu={handleMenuPopupOpen} />
+              <Main />
               <Footer />
-            </ProtectedRoute>
-          </>
-        } />
-        {/* сохраненные фильмы роут */}
-        <Route path='/saved-movies' element={
-          <>
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <LoggedInHeader
-                isOpen={isMenuPopupOpen}
-                onClose={closeMenuPopup}
-                onClickMenu={handleMenuPopupOpen}
-              />
-              <SearchForm />
-              <FilterCheckbox />
-              <SavedMovies />
-              <Footer />
-            </ProtectedRoute>
-          </>
+            </>
+          } />
+          {/* фильмы роут */}
+          <Route path='/movies' element={
+            <>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <LoggedInHeader
+                  isOpen={isMenuPopupOpen}
+                  onClose={closeMenuPopup}
+                  onClickMenu={handleMenuPopupOpen}
+                />
+                <SearchForm />
+                <FilterCheckbox />
+                <MoviesCardList />
+                <Footer />
+              </ProtectedRoute>
+            </>
+          } />
+          {/* сохраненные фильмы роут */}
+          <Route path='/saved-movies' element={
+            <>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <LoggedInHeader
+                  isOpen={isMenuPopupOpen}
+                  onClose={closeMenuPopup}
+                  onClickMenu={handleMenuPopupOpen}
+                />
+                <SearchForm />
+                <FilterCheckbox />
+                <SavedMovies />
+                <Footer />
+              </ProtectedRoute>
+            </>
 
-        } />
-        {/* профайл роут */}
-        <Route path='/profile' element={
-          <>
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <LoggedInHeader
-                isOpen={isMenuPopupOpen}
-                onClose={closeMenuPopup}
-                onClickMenu={handleMenuPopupOpen}
-              />
-              <Profile
-                onLogOut={handleLogOut}
-              />
-            </ProtectedRoute>
-          </>
-        } />
-        {/* авторизация роут (логин) */}
-        <Route path='/signin' element={<Login
-          onLogin={handleLoginUser}
-        />} />
-        {/* регистрация роут  */}
-        <Route path='/signup' element={<Register
-          onRegister={handleRegistrationUser}
-        />} />
-        {/* неизвестная страница роут  */}
-        <Route path='*' element={
-          <NotFound />
-        } />
-      </Routes>
-    </div>
-    // </currentUserContext.Provider>
+          } />
+          {/* профайл роут */}
+          <Route path='/profile' element={
+            <>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <LoggedInHeader
+                  isOpen={isMenuPopupOpen}
+                  onClose={closeMenuPopup}
+                  onClickMenu={handleMenuPopupOpen}
+                />
+                <Profile
+                  onLogOut={handleLogOut}
+                  onEdit={handleUserProfileEdit}
+                />
+              </ProtectedRoute>
+            </>
+          } />
+          {/* авторизация роут (логин) */}
+          <Route path='/signin' element={<Login
+            onLogin={handleLoginUser}
+          />} />
+          {/* регистрация роут  */}
+          <Route path='/signup' element={<Register
+            onRegister={handleRegistrationUser}
+          />} />
+          {/* неизвестная страница роут  */}
+          <Route path='*' element={
+            <NotFound />
+          } />
+        </Routes>
+        {/* )} */}
+      </div>
+    </currentUserContext.Provider>
   );
 }
 

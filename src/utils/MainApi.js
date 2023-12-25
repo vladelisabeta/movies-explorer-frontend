@@ -57,10 +57,13 @@ export class MainApi {
     }
 
     // изменить профиль пользователя 
-    editProfile(data) {
+    editProfile(data, jwt) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: "PATCH",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
             body: JSON.stringify(data)
         })
             .then(res => this._checkResponse(res))

@@ -2,54 +2,32 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import logo from '../../images/logo__COLOR_green.svg';
 import { useRef, useState } from 'react';
+import FormValidation from '../../hooks/FormValidation';
 
 function Register({ onRegister }) {
+    // const [isDisabled, setIsDisabled] = useState(false);
 
-    const registerFormRef = useRef('');
-    const [inputErrors, setInputErrors] = useState({ name: '', email: '', password: '' });
-    const [apiError, setApiError] = useState('');
-    const [isDisabled, setIsDisabled] = useState(false);
-    const [isValid, setIsValid] = useState(false);
+    // const buttonDisabled = isValid ? setIsDisabled(true) : setIsDisabled(false);
 
-
-    function onChange(evt) {
-        const { name, value, validationMessage } = evt.target;
-        // setInputValues((state) => ({
-        //     ...state,
-        //     [name]: value,
-        // }));
-        setInputErrors((state) => ({
-            ...state,
-            [name]: validationMessage,
-        }));
-        setIsValid(registerFormRef.current.checkValidity());
-    }
-
-    // сбор инпутов
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-
-    function handleChangeName(e) {
-        setName(e.target.value)
-    }
-
-    function handleChangePassword(e) {
-        setPassword(e.target.value)
-    }
-
-    function handleChangeEmail(e) {
-        setEmail(e.target.value)
-    }
     //  конец сбора инпутов
+    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
 
     // сабмит 
     function onSubmit(evt) {
         evt.preventDefault();
-        onRegister(name, email, password);
-        setIsDisabled(true);
+        onRegister(inputValue.name, inputValue.email, inputValue.password);
+        // setIsDisabled(true);
+        resetForm();
     }
 
+    const disabledButton = !(
+        validationErrors.email === "" &&
+        validationErrors.password === "" &&
+        validationErrors.name === ""
+    );
+
+    const submitButtonClassName = `form__submit-button-signup ${disabledButton ? 'form__submit-button-signup_disabled' : ''
+        }`;
 
     return (
         <section className='login'>
@@ -59,12 +37,16 @@ function Register({ onRegister }) {
                 </Link>
                 <h1 className='login__title'>Добро пожаловать!</h1>
             </div>
-            <form className='form' name='registration-form' ref={registerFormRef} onSubmit={onSubmit}>
+            <form className='form' name='registration-form' onSubmit={onSubmit} noValidate>
                 <label className='form__input-description'>Имя
-                    <input className='form__input' onChange={handleChangeName}
+                    <input className='form__input' onChange={handleChange}
                         required
-                        maxLength='30'></input>
-                    <span className='form__input-error' id='name-error'>{inputErrors.name}</span>
+                        maxLength='30'
+                        name='name'
+                        id='name'
+                        minLength='3'
+                    ></input>
+                    <span className='form__input-error' id='name-error'>{validationErrors.name}</span>
                 </label>
                 <label className='form__input-description'>
                     E-mail
@@ -72,9 +54,10 @@ function Register({ onRegister }) {
                         type='email'
                         required
                         id='email'
-                        onChange={handleChangeEmail}
+                        name='email'
+                        onChange={handleChange}
                     ></input>
-                    <span className='form__input-error' id='email-error'>{inputErrors.email}</span>
+                    <span className='form__input-error' id='email-error'>{validationErrors.email}</span>
                 </label>
                 <label className='form__input-description'>Пароль
                     <input className='form__input form__input_password' type='password'
@@ -82,13 +65,15 @@ function Register({ onRegister }) {
                         required
                         name='password'
                         id='password'
-                        onChange={handleChangePassword}
+                        onChange={handleChange}
                     ></input>
-                    <span className='form__input-error' id='password-error'>{inputErrors.password}</span>
+                    <span className='form__input-error' id='password-error'>{validationErrors.password}</span>
                 </label>
 
-                <span className='form__api-error-message'>{apiError}</span>
-                <button type='submit' className='form__submit-button-signup'>Зарегистрироваться</button>
+                <span className='form__api-error-message'></span>
+                <button type='submit' className={submitButtonClassName}
+                    disabled={disabledButton}
+                >Зарегистрироваться</button>
             </form>
             <div className='login__link-box'>
                 <p className='login__link-description'>Уже зарегистрированы?</p>

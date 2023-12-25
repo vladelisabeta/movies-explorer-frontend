@@ -79,6 +79,8 @@
     width: 260px;
 }
 
+.form__submit-button-signup_disabled {}
+
 .form__submit-button-signup:hover {
     opacity: 0.8;
     cursor: pointer;
@@ -114,6 +116,16 @@
 .login__link:hover {
     opacity: 0.7;
     cursor: pointer;
+}
+
+.form__submit-button-signup_disabled {
+    background-color: #F8F8F8;
+    color: #C2C2C2;
+    cursor: default;
+}
+
+.form__submit-button-signup_disabled:hover {
+    cursor: default;
 }
 
 

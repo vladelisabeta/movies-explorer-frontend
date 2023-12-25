@@ -52,6 +52,10 @@
 }
 
 @media screen and (min-width: 1280px) {
+    .not-found {
+        margin: 0 auto;
+    }
+
     .not-found__numbers {
         margin-top: 246px;
     }

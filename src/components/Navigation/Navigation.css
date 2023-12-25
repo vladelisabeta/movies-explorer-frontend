@@ -118,22 +118,6 @@
     padding: 7px;
 }
 
-.navigation-menu__box_main {
-    background-color: #073042;
-}
-
-.navigation-menu__link_main {
-    color: #fff;
-}
-
-.navigation-menu__account-box_main {
-    background-color: #2BE080;
-}
-
-.navigation-menu__account_main {
-    color: #fff;
-}
-
 @media screen and (min-width: 768px) {
     .navigation-menu__button-close {
         margin-left: 390px;
@@ -216,9 +200,9 @@
         font-size: 13px;
     }
 
-    .navigation-menu__link_main {
+    /* .navigation-menu__link_main {
         display: none;
-    }
+    } */
 
     .navigation-menu__link:hover {
         opacity: 0.7;
@@ -227,6 +211,18 @@
         text-underline-offset: 7px;
     }
 
+    .navigation-menu__box_main {
+        background-color: #073042;
+    }
+
+    .navigation-menu__link_main {
+        color: #fff;
+    }
+
+    .navigation-menu__account-box_main {
+        background-color: #2BE080;
+        box-shadow: none;
+    }
 }
 
 
@@ -269,14 +265,27 @@
         font-size: 13px;
     }
 
-    .navigation-menu__link_main {
+    /* .navigation-menu__link_main {
         display: none;
-    }
+    } */
 
     .navigation-menu__link:hover {
         opacity: 0.7;
         cursor: pointer;
         text-decoration: underline;
         text-underline-offset: 7px;
+    }
+
+    .navigation-menu__box_main {
+        background-color: #073042;
+    }
+
+    .navigation-menu__link_main {
+        color: #fff;
+    }
+
+    .navigation-menu__account-box_main {
+        background-color: #2BE080;
+        box-shadow: none;
     }
 }

@@ -2,27 +2,30 @@ import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import './Login.css'
 import logo from '../../images/logo__COLOR_green.svg'
+import FormValidation from '../../hooks/FormValidation';
 
 function Login({ onLogin }) {
+    // const [isDisabled, setIsDisabled] = useState(false);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
+    // const buttonDisabled = isValid ? setIsDisabled(true) : setIsDisabled(false);
 
-
-    function handleChangeEmail(e) {
-        setEmail(e.target.value)
+    function onSubmit(evt) {
+        evt.preventDefault();
+        onLogin(inputValue.email, inputValue.password);
+        resetForm();
     }
 
-    function handleChangePassword(e) {
-        setPassword(e.target.value)
-    }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    const disabledButton = !(
+        validationErrors.email === "" &&
+        validationErrors.password === ""
+        // validationErrors.name === ""
+    );
 
-        onLogin(email, password);
-
-    }
+    console.log(disabledButton, 'кнопка')
+    const submitButtonClassName = `form__submit-button ${disabledButton ? 'form__submit-button_disabled' : ''
+        }`;
 
     return (
         <section className='login'>
@@ -32,15 +35,27 @@ function Login({ onLogin }) {
                 </Link>
                 <h1 className='login__title'>Рады видеть!</h1>
             </div>
-            <form className='form' name='login-form' onSubmit={handleSubmit}>
+            <form className='form' name='login-form' onSubmit={onSubmit} noValidate>
                 <label className='form__input-description'>E-mail
-                    <input className='form__input' onChange={handleChangeEmail}></input>
+                    <input className='form__input' onChange={handleChange}
+                        type='email'
+                        required
+                        name='email'
+                    ></input>
+                    <span className='form__input-error' id='email-error'>{validationErrors.email}</span>
                 </label>
                 <label className='form__input-description'>
                     Пароль
-                    <input className='form__input form__input_password' type='password' onChange={handleChangePassword}></input>
+                    <input className='form__input form__input_password' type='password' onChange={handleChange}
+                        minLength='8'
+                        required
+                        name='password'
+                    ></input>
+                    <span className='form__input-error' id='password-error'>{validationErrors.password}</span>
                 </label>
-                <button type='submit' className='form__submit-button'>Войти</button>
+                <button type='submit' className={submitButtonClassName}
+                    disabled={disabledButton}
+                >Войти</button>
             </form>
             <div className='login__link-box'>
                 <p className='login__link-description'>Ещё не зарегистрированы?</p>
