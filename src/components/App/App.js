@@ -229,9 +229,10 @@ function App() {
                   onClose={closeMenuPopup}
                   onClickMenu={handleMenuPopupOpen}
                 />
-                <SearchForm />
-                <FilterCheckbox />
-                <SavedMovies />
+                {/* <SearchForm /> */}
+                {/* <FilterCheckbox /> */}
+                <SavedMovies
+                />
                 <Footer />
               </ProtectedRoute>
             </>

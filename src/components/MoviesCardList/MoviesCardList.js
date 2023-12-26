@@ -1,6 +1,7 @@
 import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Preloader from '../Preloader/Preloader';
 
 const pathname = window.location.pathname;
 const buttoneName = 'movies-card-list__button-more';
