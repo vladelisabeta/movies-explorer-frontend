@@ -8,11 +8,14 @@ const buttoneName = 'movies-card-list__button-more';
 const buttonModifiedName = pathname === '/saved-movies' ? 'movies-card-list__button-more_hidden' : '';
 const isHiddenButton = `${buttoneName} ${buttonModifiedName}`
 
-function MoviesCardList() {
+function MoviesCardList({ movieCards, loadMoreCards, moreMoviesCheck, isSearchEmpty, isSearchSuccessfull, handleMovieToggle, isLoading, apiError }) {
     return (
         <section className='movies-card-list'>
             <div className='movies-card-list__box'>
                 <ul className='movies-card-list__grid'>
+                    {console.log(movieCards, 'это муви карды')}
+                    {/* {movieCards.map((movie) => <MoviesCard movie={movie} key={movie.id} handleMovieToggle={handleMovieToggle} />)} */}
+                    {/* <MoviesCard buttonClass='movie-card__button-delete' />
                     <MoviesCard buttonClass='movie-card__button-delete' />
                     <MoviesCard buttonClass='movie-card__button-delete' />
                     <MoviesCard buttonClass='movie-card__button-delete' />
@@ -21,8 +24,7 @@ function MoviesCardList() {
                     <MoviesCard buttonClass='movie-card__button-delete' />
                     <MoviesCard buttonClass='movie-card__button-delete' />
                     <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
+                    <MoviesCard buttonClass='movie-card__button-delete' /> */}
                     {/* <SavedMovies></SavedMovies>
                     <SavedMovies></SavedMovies>
                     <SavedMovies></SavedMovies> */}

@@ -14,3 +14,27 @@ export const URL_IMAGE = 'https://api.nomoreparties.co/';
 
 export const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
 
+export const cardsCounterShow = () => {
+    const counter = { init: 12, more: 3 };
+    if (window.innerWidth > 1280) {
+        counter.init = 16;
+        counter.more = 8;
+    }
+
+    if (window.innerWidth < 1280) {
+        counter.init = 8;
+        counter.more = 4;
+    }
+    if (window.innerWidth < 481) {
+        counter.init = 5;
+        counter.more = 2;
+    }
+
+    return counter;
+};
+
+export function movieDurationConverted(duration) {
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    return `${hours}ч ${minutes}м`;
+}

@@ -18,6 +18,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import LoggedInHeader from '../LoggedInHeader/LoggedInHeader';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 import './App.css';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { MainApi } from '../../utils/MainApi';
@@ -213,9 +214,10 @@ function App() {
                   onClose={closeMenuPopup}
                   onClickMenu={handleMenuPopupOpen}
                 />
-                <SearchForm />
-                <FilterCheckbox />
-                <MoviesCardList />
+                <Movies />
+                {/* <SearchForm /> */}
+                {/* <FilterCheckbox /> */}
+                {/* <MoviesCardList /> */}
                 <Footer />
               </ProtectedRoute>
             </>
