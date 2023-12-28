@@ -2,10 +2,11 @@
 import preview from '../../images/film_preview.png';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { MoviesApi } from '../../utils/MoviesApi';
 import { BASE_URL_MOVIES_API, BASE_URL_MAIN_API } from '../../utils/consts';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { currentUserContext } from '../../contexts/CurrentUserContext';
 import SearchForm from '../SearchForm/SearchForm';
 import { MainApi } from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
@@ -27,67 +28,72 @@ function SavedMovies() {
     });
 
     const [originalMovies, setOriginalMovies] = useState([]);
-    const [filteredMovies, setFilteredMovies] = useState([]);
+    const [foundMovies, setFoundMovies] = useState([]);
     const [savedSearchResults, setSavedSearchResults] = useState({ film: '', shorts: false });
     const [isLoading, setIsLoading] = useState(false);
     const [apiError, setApiError] = useState(false);
+    const { savedMovies } = useContext(currentUserContext);
+    const [movies, setMovies] = useState([]);
+    const [searchError, setSearchError] = useState(false)
 
+    const [searchData, setSearchData] = useState({
+        searchWord: '',
+        isMovieShort: false,
+    });
 
-    function filterMovies(searchResult, films) {
-        setSavedSearchResults(searchResult);
-        setSavedSearchResults(films.filter((movie) => {
-            const isFilmFound = movie.nameRU.toLowerCase().includes(searchResult.film.toLowerCase());
-            return searchResult.shorts ? (isFilmFound && movie.duration <= 40) : isFilmFound;
-        }));
-    }
+    function optimizedSearchMovie(movies, searchWord, isShort) {
+        const movieResult = searchWord.toLowerCase().trim();
 
+        const searchedMovies = movies
+            .filter((movie) => {
+                const ruName = movie.nameRU && movie.nameRU.toLowerCase();
+                const enName = movie.nameEN && movie.nameEN.toLowerCase();
+                return (ruName.match(movieResult)) || (enName && enName.match(movieResult));
+            });
+
+        if (isShort) {
+            return searchedMovies.filter((movie) => movie.duration <= 40);
+        }
+
+        return searchedMovies;
+    };
+
+    console.log(savedMovies)
+
+    function handleSearchMovies(searchWord, isMovieShort) {
+        const foundMovies = optimizedSearchMovie(savedMovies, searchWord, isMovieShort);
+        foundMovies.length === 0 ? setSearchError(true) : setSearchError(false);
+        setMovies(foundMovies);
+    };
 
     useEffect(() => {
-        setIsLoading(true);
-        moviesApi.getMovies()
-            .then((recievedServerMovies) => {
-                const savedMovies = recievedServerMovies.filter((movie) => movie.isSaved);
-                setOriginalMovies(savedMovies);
-                filterMovies(savedSearchResults, savedMovies);
-            })
-            .catch((err) => {
-                console.log(err);
-                setApiError(true);
-            })
-            .finally(() => {
-                setIsLoading(false)
-            })
-    }, []);
+        setMovies(savedMovies);
+        handleSearchMovies(searchData.searchWord, searchData.isMovieShort);
+        !savedMovies.length ? setSearchError(true) : setSearchError(false);
+    }, [savedMovies]);
 
-    function onClickRemoveMovie(movie) {
-        mainApi.removeMovie(movie)
-            .then((updatedMovies) => {
-                const savedMovies = updatedMovies.filter((film) => film.isSaved);
-                setOriginalMovies(savedMovies);
-                filterMovies(savedSearchResults, savedMovies)
-            })
-            .catch((err) => {
-                console.log(err);
-                setApiError(true);
-            })
-    }
+    const handleSearchSubmit = (word) => {
+        setSearchData({ ...searchData, searchWord: word });
+        handleSearchMovies(word, searchData.isMovieShort);
+    };
 
-    function handleClickSearch(search) {
-        filterMovies(search, originalMovies)
+    function handleChangeCheckBox(isChecked) {
+        setSearchData({ ...searchData, isMovieShort: isChecked });
+        handleSearchMovies(searchData.searchWord, isChecked);
     }
 
     return (
         <>
             <SearchForm
-                handleSearch={handleClickSearch}
-                savedSearchResults={savedSearchResults}
+                handleSearch={handleSearchSubmit}
+            // savedSearchResults={savedSearchResults}
             />
-            <FilterCheckbox />
+            <FilterCheckbox
+                handleChangeCheckBox={handleChangeCheckBox}
+            />
 
             {isLoading && (<Preloader />)}
             <MoviesCardList
-                movieCards={filterMovies}
-                onClickRemoveButton={onClickRemoveMovie}
                 isLoading={isLoading}
                 apiError={apiError}
             />

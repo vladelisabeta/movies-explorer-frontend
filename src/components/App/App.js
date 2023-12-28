@@ -72,9 +72,10 @@ function App() {
     if (isLoggedIn) {
       setIsLoading(true);
       mainApi.getToken();
-      Promise.all([mainApi.getUserProfile()])
-        .then(([userData]) => {
+      Promise.all([mainApi.getUserProfile(), mainApi.getSavedMovies()])
+        .then(([userData, serverSavedMovies]) => {
           setCurrentUser(userData)
+          setMovies(serverSavedMovies.filter((movie) => movie.owner === userData._id));
         })
         .catch((err) => {
           console.log(err)
@@ -176,6 +177,15 @@ function App() {
       .catch((error) => console.log(`Ошибка: ${error}`))
       .finally(() => setIsLoading(false));
   }
+
+  // function name() {
+  //   moviesApi.getMovies()
+  //     .then((serverMovies) => {
+  //       console.log(serverMovies)
+  //     })
+  // }
+
+  // name()
 
 
   // вспомогательные функции

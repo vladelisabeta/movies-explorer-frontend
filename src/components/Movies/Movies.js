@@ -34,15 +34,6 @@ function Movies() {
     const [isLoading, setIsLoading] = useState(false);
     const [apiError, setApiError] = useState(false);
     const [searchError, setSearchError] = useState(false);
-    const counter = cardsCounterShow();
-    const [cardsCounter, setCardsCounter] = useState(counter.init);
-
-
-    function loadMoreCards() {
-        const { moreCards } = cardsCounterShow();
-        setCardsCounter(cardsCounter + moreCards);
-    }
-
 
     useEffect(() => {
         const searchFromStorageResult = JSON.parse(localStorage.getItem('storageSearchResult')) || [];
@@ -54,8 +45,6 @@ function Movies() {
         searchFromStorageIsShort && setIsMovieShort(searchFromStorageIsShort);
     }, []);
 
-
-    // вспомогательные функции 
     function optimizedSearchMovie(movies, searchWord, isShort) {
         const movieResult = searchWord.toLowerCase().trim();
 
@@ -72,29 +61,6 @@ function Movies() {
 
         return searchedMovies;
     };
-
-
-    function optimizeMoviesData(movies) {
-        return movies
-            .map((movie) => ({
-                country: movie.country || 'неизвестно',
-                director: movie.director || 'неизвестно',
-                duration: movie.duration || 10,
-                year: movie.year || 1000,
-                description: movie.description || 'неизвестно',
-                image: `https://api.nomoreparties.co/${movie.image.url}`,
-                trailerLink: movie.trailerLink,
-                thumbnail: `https://api.nomoreparties.co/${movie.image.url}`,
-                movieId: movie.id,
-                nameRU: movie.nameRU || 'неизвестно',
-                nameEN: movie.nameEN || 'неизвестно',
-            }))
-            .map((movie) => (
-                movie.trailerLink ? movie : { ...movie, trailerLink: movie.image }
-            ));
-    };
-
-
     // 
 
     function handleInitialSearch(searchWord, isMovieShort) {
@@ -102,12 +68,12 @@ function Movies() {
             setIsLoading(true);
             moviesApi.getMovies()
                 .then((serverMovies) => {
-                    const optimizedMovies = optimizeMoviesData(serverMovies);
-                    localStorage.setItem('storageSearchResult', JSON.stringify(optimizedMovies));
+                    localStorage.setItem('storageSearchResult', JSON.stringify(serverMovies));
                     const searchedMovies = searchWord
-                        ? searchedMovies(optimizedMovies, searchWord, isMovieShort)
+                        ? optimizedSearchMovie(serverMovies, searchWord, isMovieShort)
                         : [];
-                    handleSearchResult(searchedMovies);
+                    handleSearchResult(searchedMovies)
+                    console.log(serverMovies)
                 })
                 .catch((err) => {
                     console.log(err);
@@ -117,7 +83,7 @@ function Movies() {
                 .finally(() => setIsLoading(false));
         } else {
             const searchedMovies = searchWord
-                ? searchedMovies(storageSearchedMovies, searchWord, isMovieShort)
+                ? optimizedSearchMovie(storageSearchedMovies, searchWord, isMovieShort)
                 : [];
             handleSearchResult(searchedMovies);
         }
@@ -148,17 +114,24 @@ function Movies() {
         <>
             <SearchForm
                 handleSearch={handleSubmitSearch}
+                isLoading={isLoading}
+                showApiError={apiError} // значения булевы
+                showSearchError={searchError} // значения булевы
             />
             <FilterCheckbox
                 handleChangeCheckBox={handleChangeCheckBox}
             />
 
             {isLoading && (<Preloader />)}
-            <MoviesCardList
-                isLoading={isLoading}
-                showApiError={apiError} // значения булевы
-                showSearchError={searchError} // значения булевы
-            />
+            {apiError && searchError ? '' :
+
+                <MoviesCardList
+                    movieCardsOriginal={searchedOriginalMovies}
+                    isLoading={isLoading}
+                    showApiError={apiError} // значения булевы
+                    showSearchError={searchError} // значения булевы
+                />
+            }
         </>
     )
 }
