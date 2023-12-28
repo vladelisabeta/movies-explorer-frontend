@@ -78,10 +78,13 @@ export class MainApi {
     }
 
     // сохранить фильм
-    saveMovie(data) {
+    saveMovie(data, jwt) {
         return fetch(`${this._baseUrl}/movies`, {
             method: "POST",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
             body: JSON.stringify(data)
         })
             .then(res => this._checkResponse(res))
