@@ -33,6 +33,9 @@ function MoviesCardList({ loadMoreCards, moreMoviesCheck, isSearchEmpty, isSearc
     };
 
     function displayMovieCards() {
+        if (!movieCardsOriginal) {
+            return null;
+        }
         return movieCardsOriginal.slice(0, cardsDisplayed).map((movie) => (
             <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} film={movie} checkIsFilmSaved={isFilmSaved} />
         ));

@@ -52,7 +52,7 @@ function App() {
 
   const [loadingPage, setLoadingPage] = useState(true);
   //  стейт фильмов
-  const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   // стейт прелоадера
   const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +75,7 @@ function App() {
       Promise.all([mainApi.getUserProfile(), mainApi.getSavedMovies()])
         .then(([userData, serverSavedMovies]) => {
           setCurrentUser(userData)
-          setMovies(serverSavedMovies.filter((movie) => movie.owner === userData._id));
+          setSavedMovies(serverSavedMovies.filter((movie) => movie.owner === userData._id));
         })
         .catch((err) => {
           console.log(err)
@@ -198,7 +198,7 @@ function App() {
   }
 
   return (
-    <currentUserContext.Provider value={currentUser}>
+    <currentUserContext.Provider value={{ currentUser, savedMovies, setSavedMovies }}>
       <div className="app">
         {/* {loadingPage ? (<Preloader />) : ( */}
         <Routes>

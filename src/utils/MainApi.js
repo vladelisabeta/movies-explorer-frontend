@@ -91,10 +91,13 @@ export class MainApi {
     }
 
     // удалить из сохраненных фильмов
-    removeMovie(id) {
+    removeMovie(id, jwt) {
         return fetch(`${this._baseUrl}/movies/${id}`, {
             method: "DELETE",
-            headers: this._headers,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
         })
             .then(res => this._checkResponse(res))
     }
