@@ -3,12 +3,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { currentUserContext } from '../../contexts/CurrentUserContext';
 import FormValidation from '../../hooks/FormValidation';
 
-function Profile({ onLogOut, onEdit }) {
+function Profile({ onLogOut, onEdit, setApiErrorProfile, apiErrorProfile }) {
     // const currentUser = React.useContext(currentUserContext);
     const [isEditing, setIsEditing] = useState(false);
     const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
     const { currentUser } = useContext(currentUserContext);
-
 
     function handleEditClick(evt) {
         setIsEditing(false);
@@ -80,6 +79,7 @@ function Profile({ onLogOut, onEdit }) {
                             :
                             <button type='submit' className='profile__edit-button' onClick={handleEditClick}>Редактировать</button>
                         }
+                        {apiErrorProfile ? <p className='profile__api-error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p> : ''}
                         {!isEditing ?
                             <button type='button' className='profile__logout-button' onClick={onLogOut}>Выйти из аккаунта</button>
                             :

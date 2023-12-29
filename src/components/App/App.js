@@ -57,6 +57,8 @@ function App() {
 
   // стейт прелоадера
   const [isLoading, setIsLoading] = useState(false);
+  const [apiErrorProfile, setApiErrorProfile] = useState(false)
+
 
 
   // временное решение меню ??????
@@ -175,7 +177,11 @@ function App() {
       .then((newUserData) => {
         setCurrentUser(newUserData);
       })
-      .catch((error) => console.log(`Ошибка: ${error}`))
+      .catch((error) => {
+        console.log(`Ошибка: ${error}`)
+        setApiErrorProfile(true)
+      }
+      )
       .finally(() => setIsLoading(false));
   }
 
@@ -263,6 +269,8 @@ function App() {
                 <Profile
                   onLogOut={handleLogOut}
                   onEdit={handleUserProfileEdit}
+                  setApiErrorProfile={setApiErrorProfile}
+                  apiErrorProfile={apiErrorProfile}
                 />
               </ProtectedRoute>
             </>
