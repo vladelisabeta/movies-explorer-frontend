@@ -1,21 +1,13 @@
 import './Profile.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { currentUserContext } from '../../contexts/CurrentUserContext';
 import FormValidation from '../../hooks/FormValidation';
-import { MainApi } from '../../utils/MainApi';
-import { BASE_URL_MAIN_API } from '../../utils/consts';
 
 function Profile({ onLogOut, onEdit }) {
-    const currentUser = React.useContext(currentUserContext);
+    // const currentUser = React.useContext(currentUserContext);
     const [isEditing, setIsEditing] = useState(false);
     const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
-
-    const mainApi = new MainApi({
-        baseUrl: BASE_URL_MAIN_API,
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    const { currentUser } = useContext(currentUserContext);
 
 
     function handleEditClick(evt) {
@@ -24,6 +16,7 @@ function Profile({ onLogOut, onEdit }) {
         console.log('click edit')
         setIsEditing(true);
     }
+    console.log(currentUser)
 
     useEffect(() => {
         setInputValue({
