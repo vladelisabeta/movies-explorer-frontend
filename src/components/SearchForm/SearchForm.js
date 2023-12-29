@@ -1,16 +1,31 @@
 import './SearchForm.css'
 import FormValidation from '../../hooks/FormValidation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 
-function SearchForm({ isLoading, showApiError, showSearchError, handleSearch }) {
+function SearchForm({ isLoading, showApiError, showSearchError, handleSearch, setShowSearchError }) {
     const { pathname } = useLocation();
     const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
+    const [emptyError, setEmptyError] = useState(false)
 
-    const handleSubmitForm = (evt) => {
+    // const handleSubmitForm = (evt) => {
+    //     evt.preventDefault();
+    //     isValid ? handleSearch(inputValue.searchWord) : showSearchError(true);
+    // };
+
+    function handleSubmitForm(evt) {
         evt.preventDefault();
-        isValid ? handleSearch(inputValue.searchWord) : showSearchError(true);
+        if (!inputValue.searchWord) {
+            setShowSearchError(true);
+        } else if (isValid) {
+            handleSearch(inputValue.searchWord);
+        } else if (inputValue.searchWord.trim() === '') {
+            setEmptyError(true);
+        }
+        else {
+            setShowSearchError(true);
+        }
     };
 
     useEffect(() => {
@@ -39,6 +54,7 @@ function SearchForm({ isLoading, showApiError, showSearchError, handleSearch }) 
             </form>
             {/* </div> */}
             {showSearchError ? <p className='search-form__error'>Ничего не найдено</p> : ''}
+            {emptyError ? <p className='search-form__error'>Введите что-нибудь</p> : ''}
             {showApiError ? <p className='search-form__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p> : ''}
         </section>
     )

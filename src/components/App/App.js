@@ -52,7 +52,8 @@ function App() {
 
   const [loadingPage, setLoadingPage] = useState(true);
   //  стейт фильмов
-  const [savedMovies, setSavedMovies] = useState([]);
+  // const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
 
   // стейт прелоадера
   const [isLoading, setIsLoading] = useState(false);
@@ -198,7 +199,7 @@ function App() {
   }
 
   return (
-    <currentUserContext.Provider value={{ currentUser, savedMovies, setSavedMovies }}>
+    <currentUserContext.Provider value={{ currentUser, setCurrentUser, savedMovies, setSavedMovies }}>
       <div className="app">
         {/* {loadingPage ? (<Preloader />) : ( */}
         <Routes>

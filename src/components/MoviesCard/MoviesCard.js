@@ -14,7 +14,7 @@ function MoviesCard({ movie, checkIsMovieSaved }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isMovieSaved, setIsMovieSaved] = useState(false);
 
-    // console.log(savedMovies, 'savedd movies')
+    console.log(savedMovies, 'savedd movies')
 
     const mainApi = new MainApi({
         baseUrl: BASE_URL_MAIN_API,
@@ -33,7 +33,9 @@ function MoviesCard({ movie, checkIsMovieSaved }) {
         setIsLoading(true);
         mainApi.saveMovie(movie, jwt)
             .then((movieData) => {
-                setSavedMovies([...savedMovies, movieData]);
+                const newSavedMovies = [...savedMovies, movieData];
+                setSavedMovies(newSavedMovies);
+                localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
                 setIsMovieSaved(true);
             })
             .catch((err) => console.log(err))
@@ -45,9 +47,11 @@ function MoviesCard({ movie, checkIsMovieSaved }) {
         setIsLoading(true);
         mainApi.removeMovie(mainId, jwt)
             .then(() => {
-                setSavedMovies(savedMovies.filter((movieData) => {
+                const newSavedMovies = savedMovies.filter((movieData) => {
                     return !(movieData._id === mainId);
-                }));
+                });
+                setSavedMovies(newSavedMovies);
+                localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
                 setIsMovieSaved(false);
             })
             .catch((err) => console.log(err))
@@ -62,7 +66,8 @@ function MoviesCard({ movie, checkIsMovieSaved }) {
             </a>
             <div className='movie-card__description-box'>
                 <p className='movie-card__film-name'>{nameRU}</p>
-                {pathname === '/movies' && <button className={`movie-card__button-save ${isMovieSaved ? 'movie-card__button-delete' : ''}`} type='button' onClick={isMovieSaved ? handleRemoveMovie : handleLikeMovie}></button>
+                {pathname === '/movies' && <button className={`movie-card__button-save ${isMovieSaved ? 'movie-card__button-delete' : ''}`} type='button'
+                    onClick={isMovieSaved ? handleRemoveMovie : handleLikeMovie}></button>
                 }
                 {pathname === '/saved-movies' && <button className={'movie-card__button-delete'} type='button' onClick={handleRemoveMovie}></button>
                 }

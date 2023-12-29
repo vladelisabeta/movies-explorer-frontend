@@ -177,7 +177,10 @@ function Movies() {
                 handleSearch={handleSubmitSearch}
                 isLoading={isLoading}
                 showApiError={apiError} // значения булевы
-                showSearchError={searchError} // значения булевы
+                showSearchError={searchError}
+                setShowSearchError={setSearchError}
+                setShowApiError={setApiError}
+            // значения булевы
             />
             <FilterCheckbox
                 handleChangeCheckBox={handleChangeCheckBox}

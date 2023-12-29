@@ -35,6 +35,12 @@
     padding: 8px 13px;
 }
 
+.search-form__error {
+    font-size: 13px;
+    line-height: 105%;
+    font-weight: 500;
+}
+
 .search-form__input-button:hover {
     opacity: 0.8;
     cursor: pointer;
