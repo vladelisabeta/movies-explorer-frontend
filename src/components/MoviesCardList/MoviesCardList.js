@@ -25,10 +25,10 @@ function MoviesCardList({ loadMoreCards, moreMoviesCheck, isSearchEmpty, isSearc
     //     <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} film={movie} />
     // ));
 
-    function isFilmSaved(film) {
-        const currentFilm = savedMovies.find((movie) => movie.movieId === movie.movieId);
-        return currentFilm
-            ? { isMovieSaved: true, id: currentFilm._id }
+    function isMovieSaved(movie) {
+        const currentMovie = savedMovies.find((movieData) => movieData.movieId === movie.movieId);
+        return currentMovie
+            ? { isMovieSaved: true, id: currentMovie._id }
             : { isMovieSaved: false, id: '' }
     };
 
@@ -37,7 +37,7 @@ function MoviesCardList({ loadMoreCards, moreMoviesCheck, isSearchEmpty, isSearc
             return null;
         }
         return movieCardsOriginal.slice(0, cardsDisplayed).map((movie) => (
-            <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} film={movie} checkIsFilmSaved={isFilmSaved} />
+            <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} movie={movie} checkIsMovieSaved={isMovieSaved(movie)} />
         ));
     }
 

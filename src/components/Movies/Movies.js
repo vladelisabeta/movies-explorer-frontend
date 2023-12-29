@@ -25,31 +25,31 @@ function Movies() {
         }
     });
 
-    const fixMissingPropsMovie = (movies) => {
-        return movies
-            .map((movie) => ({
-                image: `https://api.nomoreparties.co/${movie.image.url}`,
-                thumbnail: `https://api.nomoreparties.co/${movie.image.url}`,
-            }))
-    };
-
-
     // const fixMissingPropsMovie = (movies) => {
     //     return movies
     //         .map((movie) => ({
-    //             country: movie.country || 'unknown',
-    //             director: movie.director || 'unknown',
-    //             duration: movie.duration || 60,
-    //             year: movie.year || 2000,
-    //             description: movie.description || 'unknown',
     //             image: `https://api.nomoreparties.co/${movie.image.url}`,
-    //             trailerLink: movie.trailerLink,
     //             thumbnail: `https://api.nomoreparties.co/${movie.image.url}`,
-    //             movieId: movie.id,
-    //             nameRU: movie.nameRU || 'unknown',
-    //             nameEN: movie.nameEN || 'unknown',
     //         }))
     // };
+
+
+    const fixMissingPropsMovie = (movies) => {
+        return movies
+            .map((movie) => ({
+                country: movie.country || 'unknown',
+                director: movie.director || 'unknown',
+                duration: movie.duration || 60,
+                year: movie.year || 2000,
+                description: movie.description || 'unknown',
+                image: `https://api.nomoreparties.co${movie.image.url}`,
+                trailerLink: movie.trailerLink,
+                thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
+                movieId: movie.id,
+                nameRU: movie.nameRU || 'unknown',
+                nameEN: movie.nameEN || 'unknown',
+            }))
+    };
 
 
     // image: `https://api.nomoreparties.co/${movie.image.url}`,
@@ -94,6 +94,7 @@ function Movies() {
     };
     // 
 
+
     // function handleInitialSearch(searchWord, isMovieShort) {
     //     if (!storageSearchedMovies.length) {
     //         setIsLoading(true);
@@ -127,7 +128,7 @@ function Movies() {
             moviesApi.getMovies()
                 .then((serverMovies) => {
                     const fixedMovies = fixMissingPropsMovie(serverMovies)
-                    localStorage.setItem('storageSearchResult', JSON.stringify(fixedMovies));
+                    localStorage.setItem('storageSearchedMovies', JSON.stringify(fixedMovies));
                     const searchedMovies = searchWord
                         ? optimizedSearchMovie(fixedMovies, searchWord, isMovieShort)
                         : [];

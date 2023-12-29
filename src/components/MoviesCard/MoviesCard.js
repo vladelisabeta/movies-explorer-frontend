@@ -6,18 +6,15 @@ import { MainApi } from '../../utils/MainApi';
 import { movieDurationConverted } from '../../utils/consts';
 import { currentUserContext } from '../../contexts/CurrentUserContext';
 
-function MoviesCard({ film }) {
+function MoviesCard({ movie, checkIsMovieSaved }) {
     const pathname = window.location.pathname;
-    const { nameRU, trailerLink, thumbnail, duration, image } = film;
+    const { nameRU, trailerLink, thumbnail, duration, image } = movie;
     const { savedMovies, setSavedMovies } = useContext(currentUserContext);
     const [mainId, setMainId] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isMovieSaved, setIsMovieSaved] = useState(false);
-    // const imageUrl = `https://api.nomoreparties.co/${image.url}`
-    // const imageUrl = `https://api.nomoreparties.co${image.url.startsWith('/') ? '' : '/'}${image.url}`
 
-    console.log(savedMovies, 'savedd movies')
-    // console.log(imageUrl, 'image')
+    // console.log(savedMovies, 'savedd movies')
 
     const mainApi = new MainApi({
         baseUrl: BASE_URL_MAIN_API,
@@ -25,15 +22,19 @@ function MoviesCard({ film }) {
             'Content-Type': 'application/json'
         }
     });
+    useEffect(() => {
+        setIsMovieSaved(checkIsMovieSaved.isMovieSaved);
+        setMainId(checkIsMovieSaved.id);
+    }, [checkIsMovieSaved]);
+
 
     function handleLikeMovie() {
         const jwt = localStorage.getItem('jwt');
         setIsLoading(true);
-        mainApi.saveMovie(film, jwt)
+        mainApi.saveMovie(movie, jwt)
             .then((movieData) => {
                 setSavedMovies([...savedMovies, movieData]);
                 setIsMovieSaved(true);
-                setMainId(movieData._id); // Set the mainId state here
             })
             .catch((err) => console.log(err))
             .finally(() => setIsLoading(false));
