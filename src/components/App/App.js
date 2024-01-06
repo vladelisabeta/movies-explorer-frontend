@@ -53,13 +53,19 @@ function App() {
   const [loadingPage, setLoadingPage] = useState(true);
   //  стейт фильмов
   // const [savedMovies, setSavedMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
+  // const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
 
   // стейт прелоадера
   const [isLoading, setIsLoading] = useState(false);
   const [apiErrorProfile, setApiErrorProfile] = useState(false)
 
+  const [savedMovies, setSavedMovies] = useState(getInitialState());
 
+
+  function getInitialState() {
+    const savedMovies = localStorage.getItem('savedMovies');
+    return savedMovies ? JSON.parse(savedMovies) : [];
+  }
 
   // временное решение меню ??????
   const [isMenuPopupOpen, setMenuPopupOpen] = useState(false);
@@ -276,13 +282,19 @@ function App() {
             </>
           } />
           {/* авторизация роут (логин) */}
-          <Route path='/signin' element={<Login
-            onLogin={handleLoginUser}
-          />} />
+          <Route path='/signin' element={
+            isLoggedIn ? <Navigate to='/movies' /> :
+              <Login
+                onLogin={handleLoginUser}
+              />
+
+          } />
           {/* регистрация роут  */}
-          <Route path='/signup' element={<Register
-            onRegister={handleRegistrationUser}
-          />} />
+          <Route path='/signup' element={
+            isLoggedIn ? <Navigate to='/movies' /> :
+              <Register
+                onRegister={handleRegistrationUser}
+              />} />
           {/* неизвестная страница роут  */}
           <Route path='*' element={
             <NotFound />
