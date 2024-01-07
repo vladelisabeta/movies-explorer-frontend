@@ -52,20 +52,25 @@ function App() {
 
   const [loadingPage, setLoadingPage] = useState(true);
   //  стейт фильмов
-  // const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   // const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+  // }, [savedMovies]);
+
 
   // стейт прелоадера
   const [isLoading, setIsLoading] = useState(false);
   const [apiErrorProfile, setApiErrorProfile] = useState(false)
 
-  const [savedMovies, setSavedMovies] = useState(getInitialState());
+  // const [savedMovies, setSavedMovies] = useState(getInitialState());
 
 
-  function getInitialState() {
-    const savedMovies = localStorage.getItem('savedMovies');
-    return savedMovies ? JSON.parse(savedMovies) : [];
-  }
+  // function getInitialState() {
+  //   const savedMovies = localStorage.getItem('savedMovies');
+  //   return savedMovies ? JSON.parse(savedMovies) : [];
+  // }
 
   // временное решение меню ??????
   const [isMenuPopupOpen, setMenuPopupOpen] = useState(false);
@@ -84,7 +89,9 @@ function App() {
       Promise.all([mainApi.getUserProfile(), mainApi.getSavedMovies()])
         .then(([userData, serverSavedMovies]) => {
           setCurrentUser(userData)
-          setSavedMovies(serverSavedMovies.filter((movie) => movie.owner === userData._id));
+          setSavedMovies(serverSavedMovies.filter((movie) => movie.owner === currentUser._id));
+          setSavedMovies(serverSavedMovies)
+          console.log(savedMovies, 'in App')
         })
         .catch((err) => {
           console.log(err)
@@ -95,6 +102,8 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  console.log(isLoggedIn, 'app check')
+  console.log(savedMovies, ' saved in app')
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -169,6 +178,7 @@ function App() {
   function handleLogOut() {
     console.log('jwt успешно удален')
     localStorage.removeItem("jwt");
+    localStorage.clear();
     console.log('произошел выход из учетной записи')
     setIsLoggedIn(false);
     navigate('/signin');
@@ -191,6 +201,38 @@ function App() {
       .finally(() => setIsLoading(false));
   }
 
+
+  function handleLikeMovie(movie) {
+    const jwt = localStorage.getItem('jwt');
+    setIsLoading(true);
+    mainApi.saveMovie(movie, jwt)
+      .then((movieData) => {
+        const newSavedMovies = [...savedMovies, movieData];
+        setSavedMovies(newSavedMovies);
+        // localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
+        // setIsMovieSaved(true);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+  };
+
+  function handleRemoveMovie(movieId) {
+    const jwt = localStorage.getItem('jwt');
+    setIsLoading(true);
+    mainApi.removeMovie(movieId, jwt)
+      .then(() => {
+        const newSavedMovies = savedMovies.filter((movieData) => {
+          return !(movieData._id === movieId);
+        });
+        setSavedMovies(newSavedMovies);
+        // localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
+        // setIsMovieSaved(false);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+  };
+
+
   // function name() {
   //   moviesApi.getMovies()
   //     .then((serverMovies) => {
@@ -211,7 +253,7 @@ function App() {
   }
 
   return (
-    <currentUserContext.Provider value={{ currentUser, setCurrentUser, savedMovies, setSavedMovies }}>
+    <currentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <div className="app">
         {/* {loadingPage ? (<Preloader />) : ( */}
         <Routes>
@@ -237,7 +279,11 @@ function App() {
                   onClose={closeMenuPopup}
                   onClickMenu={handleMenuPopupOpen}
                 />
-                <Movies />
+                <Movies
+                  savedMovies={savedMovies}
+                  onClickRemove={handleRemoveMovie}
+                  onClickLike={handleLikeMovie}
+                />
                 {/* <SearchForm /> */}
                 {/* <FilterCheckbox /> */}
                 {/* <MoviesCardList /> */}

@@ -6,15 +6,15 @@ import { MainApi } from '../../utils/MainApi';
 import { movieDurationConverted } from '../../utils/consts';
 import { currentUserContext } from '../../contexts/CurrentUserContext';
 
-function MoviesCard({ movie, checkIsMovieSaved }) {
+function MoviesCard({ movieCard, checkIsMovieSaved, onClickRemove, onClickLike }) {
     const pathname = window.location.pathname;
-    const { nameRU, trailerLink, thumbnail, duration, image } = movie;
+    const { nameRU, trailerLink, thumbnail, duration, image } = movieCard;
     const { savedMovies, setSavedMovies } = useContext(currentUserContext);
     const [mainId, setMainId] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isMovieSaved, setIsMovieSaved] = useState('');
 
-    console.log(savedMovies, 'savedd movies')
+    // console.log(savedMovies, 'savedd movies')
 
     const mainApi = new MainApi({
         baseUrl: BASE_URL_MAIN_API,
@@ -29,35 +29,50 @@ function MoviesCard({ movie, checkIsMovieSaved }) {
     }, [checkIsMovieSaved]);
 
 
-    function handleLikeMovie() {
-        const jwt = localStorage.getItem('jwt');
-        setIsLoading(true);
-        mainApi.saveMovie(movie, jwt)
-            .then((movieData) => {
-                const newSavedMovies = [...savedMovies, movieData];
-                setSavedMovies(newSavedMovies);
-                localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-                // setIsMovieSaved(true);
-            })
-            .catch((err) => console.log(err))
-            .finally(() => setIsLoading(false));
-    };
 
-    function handleRemoveMovie() {
-        const jwt = localStorage.getItem('jwt');
-        setIsLoading(true);
-        mainApi.removeMovie(mainId, jwt)
-            .then(() => {
-                const newSavedMovies = savedMovies.filter((movieData) => {
-                    return !(movieData._id === mainId);
-                });
-                setSavedMovies(newSavedMovies);
-                localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-                // setIsMovieSaved(false);
-            })
-            .catch((err) => console.log(err))
-            .finally(() => setIsLoading(false));
-    };
+    function handleMovieSave() {
+        if (!isMovieSaved) {
+            setIsMovieSaved(true);
+            onClickLike(movieCard);
+        } else {
+            onClickRemove(movieCard);
+            setIsMovieSaved(false);
+        }
+    }
+
+    function handleMovieRemove() {
+        onClickRemove(mainId)
+    }
+
+    // function handleLikeMovie() {
+    //     const jwt = localStorage.getItem('jwt');
+    //     setIsLoading(true);
+    //     mainApi.saveMovie(movie, jwt)
+    //         .then((movieData) => {
+    //             const newSavedMovies = [...savedMovies, movieData];
+    //             setSavedMovies(newSavedMovies);
+    //             localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
+    //             // setIsMovieSaved(true);
+    //         })
+    //         .catch((err) => console.log(err))
+    //         .finally(() => setIsLoading(false));
+    // };
+
+    // function handleRemoveMovie() {
+    //     const jwt = localStorage.getItem('jwt');
+    //     setIsLoading(true);
+    //     mainApi.removeMovie(mainId, jwt)
+    //         .then(() => {
+    //             const newSavedMovies = savedMovies.filter((movieData) => {
+    //                 return !(movieData._id === mainId);
+    //             });
+    //             setSavedMovies(newSavedMovies);
+    //             localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
+    //             // setIsMovieSaved(false);
+    //         })
+    //         .catch((err) => console.log(err))
+    //         .finally(() => setIsLoading(false));
+    // };
 
 
     return (
@@ -68,9 +83,9 @@ function MoviesCard({ movie, checkIsMovieSaved }) {
             <div className='movie-card__description-box'>
                 <p className='movie-card__film-name'>{nameRU}</p>
                 {pathname === '/movies' && <button className={`movie-card__button-save ${checkIsMovieSaved.isMovieSaved ? 'movie-card__button-delete' : ''}`} type='button'
-                    onClick={checkIsMovieSaved.isMovieSaved ? handleRemoveMovie : handleLikeMovie}></button>
+                    onClick={checkIsMovieSaved.isMovieSaved ? handleMovieRemove : handleMovieSave}></button>
                 }
-                {pathname === '/saved-movies' && <button className={'movie-card__button-delete'} type='button' onClick={handleRemoveMovie}></button>
+                {pathname === '/saved-movies' && <button className={'movie-card__button-delete'} type='button' onClick={handleMovieRemove}></button>
                 }
             </div>
             <div className='movie-card__time-box'>

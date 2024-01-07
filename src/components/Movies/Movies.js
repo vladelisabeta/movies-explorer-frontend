@@ -9,7 +9,7 @@ import { MainApi } from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
 import { cardsCounterShow } from '../../utils/consts';
 
-function Movies() {
+function Movies({ savedMovies, onClickRemove, onClickLike }) {
 
     const moviesApi = new MoviesApi({
         baseUrl: BASE_URL_MOVIES_API,
@@ -37,17 +37,17 @@ function Movies() {
     const fixMissingPropsMovie = (movies) => {
         return movies
             .map((movie) => ({
-                country: movie.country || 'unknown',
-                director: movie.director || 'unknown',
-                duration: movie.duration || 60,
-                year: movie.year || 2000,
-                description: movie.description || 'unknown',
+                country: movie.country || 'неизвестно',
+                director: movie.director || 'неизвестно',
+                duration: movie.duration || 100,
+                year: movie.year || 1000,
+                description: movie.description || 'неизвестно',
                 image: `https://api.nomoreparties.co${movie.image.url}`,
                 trailerLink: movie.trailerLink,
                 thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
                 movieId: movie.id,
-                nameRU: movie.nameRU || 'unknown',
-                nameEN: movie.nameEN || 'unknown',
+                nameRU: movie.nameRU || 'неизвестно',
+                nameEN: movie.nameEN || 'неизвестно',
             }))
     };
 
@@ -194,6 +194,9 @@ function Movies() {
                     isLoading={isLoading}
                     showApiError={apiError} // значения булевы
                     showSearchError={searchError} // значения булевы
+                    savedMovies={savedMovies}
+                    onClickRemove={onClickRemove}
+                    onClickLike={onClickLike}
                 />
             }
         </>

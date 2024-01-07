@@ -7,11 +7,15 @@ import Preloader from '../Preloader/Preloader';
 import { cardsCounterShow } from '../../utils/consts';
 
 
-function MoviesCardList({ loadMoreCards, moreMoviesCheck, isSearchEmpty, isSearchSuccessfull, handleMovieToggle, isLoading, apiError, movieCardsOriginal }) {
+function MoviesCardList({ loadMoreCards, savedMovies,
+    moreMoviesCheck, isSearchEmpty,
+    isSearchSuccessfull, handleMovieToggle,
+    onClickRemove, onClickLike,
+    isLoading, apiError, movieCardsOriginal }) {
     const pathname = window.location.pathname;
 
     // это для сохраненного поиска
-    const { savedMovies } = useContext(currentUserContext);
+    // const { savedMovies } = useContext(currentUserContext);
 
     const [cardsDisplayed, setCardsDisplayed] = useState(0);
     const [totalCards, setTotalCards] = useState(0);
@@ -37,7 +41,9 @@ function MoviesCardList({ loadMoreCards, moreMoviesCheck, isSearchEmpty, isSearc
             return null;
         }
         return movieCardsOriginal.slice(0, cardsDisplayed).map((movie) => (
-            <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} movie={movie} checkIsMovieSaved={isMovieSaved(movie)} />
+            <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} movieCard={movie} checkIsMovieSaved={isMovieSaved(movie)}
+                onClickRemove={onClickRemove}
+                onClickLike={onClickLike} />
         ));
     }
 

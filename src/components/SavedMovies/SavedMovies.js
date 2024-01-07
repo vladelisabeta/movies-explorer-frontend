@@ -58,7 +58,7 @@ function SavedMovies() {
         return searchedMovies;
     };
 
-    console.log(savedMovies)
+    // console.log(savedMovies)
 
     function handleSearchMovies(searchWord, isMovieShort) {
         const foundMovies = optimizedSearchMovie(savedMovies, searchWord, isMovieShort);
