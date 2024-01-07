@@ -102,8 +102,8 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  console.log(isLoggedIn, 'app check')
-  console.log(savedMovies, ' saved in app')
+  // console.log(isLoggedIn, 'app check')
+  // console.log(savedMovies, ' saved in app')
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -122,6 +122,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          setIsLoggedIn(false); // временное добавление проверка
           handleLogOut();
         })
         .finally(() =>
@@ -303,6 +304,9 @@ function App() {
                 {/* <SearchForm /> */}
                 {/* <FilterCheckbox /> */}
                 <SavedMovies
+                  savedMovies={savedMovies}
+                  onClickRemove={handleRemoveMovie}
+                  onClickLike={handleLikeMovie}
                 />
                 <Footer />
               </ProtectedRoute>

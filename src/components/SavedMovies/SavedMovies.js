@@ -11,7 +11,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import { MainApi } from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
 
-function SavedMovies() {
+function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
 
     const moviesApi = new MoviesApi({
         baseUrl: BASE_URL_MOVIES_API,
@@ -32,7 +32,7 @@ function SavedMovies() {
     const [savedSearchResults, setSavedSearchResults] = useState({ film: '', shorts: false });
     const [isLoading, setIsLoading] = useState(false);
     const [apiError, setApiError] = useState(false);
-    const { savedMovies } = useContext(currentUserContext);
+    // const { savedMovies } = useContext(currentUserContext);
     const [movies, setMovies] = useState([]);
     const [searchError, setSearchError] = useState(false)
 
@@ -58,7 +58,7 @@ function SavedMovies() {
         return searchedMovies;
     };
 
-    // console.log(savedMovies)
+    console.log(savedMovies, 'what is saved movies actually?')
 
     function handleSearchMovies(searchWord, isMovieShort) {
         const foundMovies = optimizedSearchMovie(savedMovies, searchWord, isMovieShort);
@@ -82,6 +82,8 @@ function SavedMovies() {
         handleSearchMovies(searchData.searchWord, isChecked);
     }
 
+    const [searchedOriginalMovies, setSearchedOriginalMovies] = useState([])
+
     return (
         <>
             <SearchForm
@@ -94,8 +96,10 @@ function SavedMovies() {
 
             {isLoading && (<Preloader />)}
             <MoviesCardList
-                isLoading={isLoading}
-                apiError={apiError}
+                savedMovies={savedMovies}
+                onClickRemove={onClickRemove}
+                onClickLike={onClickLike}
+                searchedOriginalMovies={searchedOriginalMovies}
             />
         </>
     )

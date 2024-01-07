@@ -7,15 +7,11 @@ import Preloader from '../Preloader/Preloader';
 import { cardsCounterShow } from '../../utils/consts';
 
 
-function MoviesCardList({ loadMoreCards, savedMovies,
-    moreMoviesCheck, isSearchEmpty,
-    isSearchSuccessfull, handleMovieToggle,
+function MoviesCardList({ savedMovies,
     onClickRemove, onClickLike,
-    isLoading, apiError, movieCardsOriginal }) {
+    searchedOriginalMovies }) {
     const pathname = window.location.pathname;
 
-    // это для сохраненного поиска
-    // const { savedMovies } = useContext(currentUserContext);
 
     const [cardsDisplayed, setCardsDisplayed] = useState(0);
     const [totalCards, setTotalCards] = useState(0);
@@ -25,10 +21,6 @@ function MoviesCardList({ loadMoreCards, savedMovies,
         setCardsDisplayed(counters.init);
     }, []);
 
-    // const displayedMovieCards = movieCardsOriginal.slice(0, cardsDisplayed).map((movie) => (
-    //     <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} film={movie} />
-    // ));
-
     function isMovieSaved(movie) {
         const currentMovie = savedMovies.find((movieData) => movieData.movieId === movie.movieId);
         return currentMovie
@@ -37,28 +29,38 @@ function MoviesCardList({ loadMoreCards, savedMovies,
     };
 
     function displayMovieCards() {
-        if (!movieCardsOriginal) {
-            return null;
+        if (pathname === '/saved-movies') {
+
+            return savedMovies.length ? savedMovies.map((movie) => (
+                <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} movieCard={movie} checkIsMovieSaved={isMovieSaved(movie)}
+                    onClickRemove={onClickRemove}
+                    onClickLike={onClickLike} />
+            )) : '';
+
+        } else {
+            return searchedOriginalMovies.slice(0, cardsDisplayed).map((movie) => (
+                <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} movieCard={movie} checkIsMovieSaved={isMovieSaved(movie)}
+                    onClickRemove={onClickRemove}
+                    onClickLike={onClickLike} />
+            ));
         }
-        return movieCardsOriginal.slice(0, cardsDisplayed).map((movie) => (
-            <MoviesCard buttonClass='movie-card__button-delete' key={movie.movieId} movieCard={movie} checkIsMovieSaved={isMovieSaved(movie)}
-                onClickRemove={onClickRemove}
-                onClickLike={onClickLike} />
-        ));
     }
+    console.log(savedMovies, 'what is saved movies actually?')
+    console.log(savedMovies.length)
 
     useEffect(() => {
-        setTotalCards(movieCardsOriginal.length);
-    }, [movieCardsOriginal]);
+        setTotalCards(searchedOriginalMovies.length);
+    }, [searchedOriginalMovies]);
 
     function loadMoreCards() {
         const counters = cardsCounterShow();
         setCardsDisplayed(cardsDisplayed + counters.more);
     };
 
+
     // логика кнопки
     const buttoneName = 'movies-card-list__button-more';
-    const buttonModifiedName = pathname === '/saved-movies' || cardsDisplayed === movieCardsOriginal.length ? 'movies-card-list__button-more_hidden' : '';
+    const buttonModifiedName = pathname === '/saved-movies' || cardsDisplayed >= totalCards ? 'movies-card-list__button-more_hidden' : '';
     const isHiddenButton = `${buttoneName} ${buttonModifiedName}`
 
 
@@ -67,15 +69,6 @@ function MoviesCardList({ loadMoreCards, savedMovies,
             <div className='movies-card-list__box'>
                 <ul className='movies-card-list__grid'>
                     {displayMovieCards()}
-                    {/* <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />
-                    <MoviesCard buttonClass='movie-card__button-delete' />  */}
                 </ul>
                 <div className='movies-card-list__button-box'>
                     <button type='button' className={isHiddenButton} onClick={loadMoreCards}>Ещё</button>

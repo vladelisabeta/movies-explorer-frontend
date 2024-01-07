@@ -94,34 +94,6 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
     };
     // 
 
-
-    // function handleInitialSearch(searchWord, isMovieShort) {
-    //     if (!storageSearchedMovies.length) {
-    //         setIsLoading(true);
-    //         moviesApi.getMovies()
-    //             .then((serverMovies) => {
-    //                 // const fixedMovies = fixMissingPropsMovie(serverMovies)
-    //                 localStorage.setItem('storageSearchResult', JSON.stringify(serverMovies));
-    //                 const searchedMovies = searchWord
-    //                     ? optimizedSearchMovie(serverMovies, searchWord, isMovieShort)
-    //                     : [];
-    //                 handleSearchResult(searchedMovies)
-    //                 console.log(serverMovies)
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //                 // setSearchError(true)
-    //                 setApiError(true)
-    //             })
-    //             .finally(() => setIsLoading(false));
-    //     } else {
-    //         const searchedMovies = searchWord
-    //             ? optimizedSearchMovie(storageSearchedMovies, searchWord, isMovieShort)
-    //             : [];
-    //         handleSearchResult(searchedMovies);
-    //     }
-    // };
-
     function handleInitialSearch(searchWord, isMovieShort) {
         if (!storageSearchedMovies.length) {
             setIsLoading(true);
@@ -190,10 +162,7 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
             {apiError && searchError ? '' :
 
                 <MoviesCardList
-                    movieCardsOriginal={searchedOriginalMovies}
-                    isLoading={isLoading}
-                    showApiError={apiError} // значения булевы
-                    showSearchError={searchError} // значения булевы
+                    searchedOriginalMovies={searchedOriginalMovies}
                     savedMovies={savedMovies}
                     onClickRemove={onClickRemove}
                     onClickLike={onClickLike}
