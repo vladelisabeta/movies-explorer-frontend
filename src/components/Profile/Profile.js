@@ -1,12 +1,12 @@
 import './Profile.css';
 import React, { useState, useEffect, useContext } from 'react';
 import { currentUserContext } from '../../contexts/CurrentUserContext';
-import FormValidation from '../../hooks/FormValidation';
+import useFormValidation from '../../hooks/useFormValidation';
 
 function Profile({ onLogOut, onEdit, setApiErrorProfile, apiErrorProfile }) {
     // const currentUser = React.useContext(currentUserContext);
     const [isEditing, setIsEditing] = useState(false);
-    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
+    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
     const { currentUser } = useContext(currentUserContext);
 
     function handleEditClick(evt) {

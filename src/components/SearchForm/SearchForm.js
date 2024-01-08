@@ -1,13 +1,14 @@
 import './SearchForm.css'
-import FormValidation from '../../hooks/FormValidation';
+import useFormValidation from '../../hooks/useFormValidation';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 
 function SearchForm({ isLoading, showApiError, showSearchError, handleSearch, setShowSearchError }) {
     const { pathname } = useLocation();
-    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
+    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
     const [emptyError, setEmptyError] = useState(false)
+    const [needTextError, setNeedTextError] = useState(false)
 
     // const handleSubmitForm = (evt) => {
     //     evt.preventDefault();
@@ -16,17 +17,34 @@ function SearchForm({ isLoading, showApiError, showSearchError, handleSearch, se
 
     function handleSubmitForm(evt) {
         evt.preventDefault();
-        if (!inputValue.searchWord) {
-            setShowSearchError(true);
+        if (!inputValue.searchWord || inputValue.searchWord.trim() === '') {
+            setNeedTextError(true);
+            setEmptyError(false);
+            setShowSearchError(false);
         } else if (isValid) {
             handleSearch(inputValue.searchWord);
-        } else if (inputValue.searchWord.trim() === '') {
-            setEmptyError(true);
-        }
-        else {
+            setNeedTextError(false);
+            setEmptyError(false);
+            setShowSearchError(false);
+        } else {
             setShowSearchError(true);
         }
     };
+
+
+    // function handleSubmitForm(evt) {
+    //     evt.preventDefault();
+    //     if (!inputValue.searchWord) {
+    //         setShowSearchError(true);
+    //     } else if (isValid) {
+    //         handleSearch(inputValue.searchWord);
+    //     } else if (inputValue.searchWord.trim() === '') {
+    //         setEmptyError(true);
+    //     }
+    //     else {
+    //         setShowSearchError(true);
+    //     }
+    // };
 
     useEffect(() => {
         if (pathname === '/movies') {
@@ -53,6 +71,7 @@ function SearchForm({ isLoading, showApiError, showSearchError, handleSearch, se
                 </button>
             </form>
             {/* </div> */}
+            {needTextError ? <p className='search-form__error'>Нужно ввести ключевое слово</p> : ''}
             {showSearchError ? <p className='search-form__error'>Ничего не найдено</p> : ''}
             {emptyError ? <p className='search-form__error'>Введите что-нибудь</p> : ''}
             {showApiError ? <p className='search-form__error'>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p> : ''}

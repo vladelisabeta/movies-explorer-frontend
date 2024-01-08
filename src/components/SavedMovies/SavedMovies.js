@@ -58,9 +58,11 @@ function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
         return searchedMovies;
     };
 
-    console.log(savedMovies, 'what is saved movies actually?')
+    console.log(savedMovies, 'What are the saved movies?');
 
     function handleSearchMovies(searchWord, isMovieShort) {
+        console.log(`Searching for ${searchWord}`);
+
         const foundMovies = optimizedSearchMovie(savedMovies, searchWord, isMovieShort);
         foundMovies.length === 0 ? setSearchError(true) : setSearchError(false);
         setMovies(foundMovies);
@@ -88,6 +90,11 @@ function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
         <>
             <SearchForm
                 handleSearch={handleSearchSubmit}
+                isLoading={isLoading}
+                showApiError={apiError} // значения булевы
+                showSearchError={searchError}
+                setShowSearchError={setSearchError}
+                setShowApiError={setApiError}
             // savedSearchResults={savedSearchResults}
             />
             <FilterCheckbox
@@ -96,7 +103,7 @@ function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
 
             {isLoading && (<Preloader />)}
             <MoviesCardList
-                savedMovies={savedMovies}
+                savedMovies={movies}
                 onClickRemove={onClickRemove}
                 onClickLike={onClickLike}
                 searchedOriginalMovies={searchedOriginalMovies}

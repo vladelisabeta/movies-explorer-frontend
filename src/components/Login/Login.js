@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import './Login.css'
 import logo from '../../images/logo__COLOR_green.svg'
-import FormValidation from '../../hooks/FormValidation';
+import useFormValidation from '../../hooks/useFormValidation';
 
 function Login({ onLogin }) {
     // const [isDisabled, setIsDisabled] = useState(false);
 
-    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
+    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
     // const buttonDisabled = isValid ? setIsDisabled(true) : setIsDisabled(false);
 
     function onSubmit(evt) {
@@ -16,11 +16,9 @@ function Login({ onLogin }) {
         resetForm();
     }
 
-
     const disabledButton = !(
-        validationErrors.email === "" &&
-        validationErrors.password === ""
-        // validationErrors.name === ""
+        validationErrors.email === '' &&
+        validationErrors.password === '' || undefined
     );
 
     console.log(disabledButton, 'кнопка')
@@ -41,6 +39,7 @@ function Login({ onLogin }) {
                         type='email'
                         required
                         name='email'
+                        value={inputValue.email || ''}
                     ></input>
                     <span className='form__input-error' id='email-error'>{validationErrors.email}</span>
                 </label>
@@ -50,6 +49,7 @@ function Login({ onLogin }) {
                         minLength='8'
                         required
                         name='password'
+                        value={inputValue.password || ''}
                     ></input>
                     <span className='form__input-error' id='password-error'>{validationErrors.password}</span>
                 </label>

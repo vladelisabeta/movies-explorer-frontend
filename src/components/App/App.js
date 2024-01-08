@@ -46,7 +46,7 @@ function App() {
   // стейты 
 
   //  стейт логина
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   //  стейт юзера 
   const [currentUser, setCurrentUser] = useState({});
 
@@ -105,36 +105,60 @@ function App() {
   // console.log(isLoggedIn, 'app check')
   // console.log(savedMovies, ' saved in app')
 
-  useEffect(() => {
+  async function checkToken() {
     const jwt = localStorage.getItem('jwt');
-    console.log('jwt: первый джвт ', jwt);
-
     if (jwt) {
-      setIsLoading(true)
-      mainApi
-        .checkToken(jwt)
-        .then((res) => {
-          setIsLoggedIn(true);
-          setIsLoading(false)
-          // navigate("/movies");
-          console.log(res)
-          console.log('isLoggedIn в конце юз эффект 2 что залогинено:', isLoggedIn);
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoggedIn(false); // временное добавление проверка
-          handleLogOut();
-        })
-        .finally(() =>
-          setIsLoading(false)
-        )
+      try {
+        await mainApi.checkToken(jwt);
+        setIsLoggedIn(true);
+      } catch (err) {
+        console.log(err);
+        setIsLoggedIn(false);
+        handleLogOut();
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setIsLoading(false);
     }
-    // else {
-    //   setIsLoggedIn(false);
-    //   setIsLoading(false);
-    // }
+  }
 
+  useEffect(() => {
+    checkToken();
   }, []);
+
+
+  // useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   console.log('jwt: первый джвт ', jwt);
+
+  //   if (jwt) {
+  //     setIsLoading(true)
+  //     mainApi
+  //       .checkToken(jwt)
+  //       .then((res) => {
+  //         setIsLoggedIn(true);
+  //         setIsLoading(false)
+  //         // navigate("/movies");
+  //         console.log(res)
+  //         console.log('isLoggedIn в конце юз эффект 2 что залогинено:', isLoggedIn);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         setIsLoggedIn(false); // временное добавление проверка
+  //         handleLogOut();
+  //       })
+  //       .finally(() =>
+  //         setIsLoading(false)
+  //       )
+  //   }
+  //   // else {
+  //   //   setIsLoggedIn(false);
+  //   //   setIsLoading(false);
+  //   // }
+
+  // }, []);
 
 
   // основная логика в функциях
@@ -210,8 +234,6 @@ function App() {
       .then((movieData) => {
         const newSavedMovies = [...savedMovies, movieData];
         setSavedMovies(newSavedMovies);
-        // localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-        // setIsMovieSaved(true);
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
@@ -226,23 +248,10 @@ function App() {
           return !(movieData._id === movieId);
         });
         setSavedMovies(newSavedMovies);
-        // localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-        // setIsMovieSaved(false);
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   };
-
-
-  // function name() {
-  //   moviesApi.getMovies()
-  //     .then((serverMovies) => {
-  //       console.log(serverMovies)
-  //     })
-  // }
-
-  // name()
-
 
   // вспомогательные функции
   function handleMenuPopupOpen() {
@@ -273,6 +282,8 @@ function App() {
           } />
           {/* фильмы роут */}
           <Route path='/movies' element={
+            // !isLoggedIn ? <Navigate to='/' /> :
+
             <>
               <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <LoggedInHeader
@@ -294,6 +305,8 @@ function App() {
           } />
           {/* сохраненные фильмы роут */}
           <Route path='/saved-movies' element={
+            // !isLoggedIn ? <Navigate to='/' /> :
+
             <>
               <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <LoggedInHeader
@@ -315,6 +328,7 @@ function App() {
           } />
           {/* профайл роут */}
           <Route path='/profile' element={
+            // !isLoggedIn ? <Navigate to='/' /> :
             <>
               <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <LoggedInHeader

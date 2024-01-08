@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import logo from '../../images/logo__COLOR_green.svg';
 import { useRef, useState } from 'react';
-import FormValidation from '../../hooks/FormValidation';
+import useFormValidation from '../../hooks/useFormValidation';
 
 function Register({ onRegister }) {
     // const [isDisabled, setIsDisabled] = useState(false);
@@ -10,7 +10,7 @@ function Register({ onRegister }) {
     // const buttonDisabled = isValid ? setIsDisabled(true) : setIsDisabled(false);
 
     //  конец сбора инпутов
-    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = FormValidation();
+    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
 
     // сабмит 
     function onSubmit(evt) {
@@ -45,6 +45,7 @@ function Register({ onRegister }) {
                         name='name'
                         id='name'
                         minLength='3'
+                        value={inputValue.name || ''}
                     ></input>
                     <span className='form__input-error' id='name-error'>{validationErrors.name}</span>
                 </label>
@@ -56,6 +57,7 @@ function Register({ onRegister }) {
                         id='email'
                         name='email'
                         onChange={handleChange}
+                        value={inputValue.email || ''}
                     ></input>
                     <span className='form__input-error' id='email-error'>{validationErrors.email}</span>
                 </label>
@@ -66,6 +68,7 @@ function Register({ onRegister }) {
                         name='password'
                         id='password'
                         onChange={handleChange}
+                        value={inputValue.password || ''}
                     ></input>
                     <span className='form__input-error' id='password-error'>{validationErrors.password}</span>
                 </label>
