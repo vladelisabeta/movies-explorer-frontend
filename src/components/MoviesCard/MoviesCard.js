@@ -1,20 +1,15 @@
 import './MoviesCard.css';
-import { useState, useContext, useEffect } from 'react';
-import preview from '../../images/film_preview.png';
+import { useState, useEffect } from 'react';
 import { BASE_URL_MAIN_API } from '../../utils/consts';
 import { MainApi } from '../../utils/MainApi';
 import { movieDurationConverted } from '../../utils/consts';
-import { currentUserContext } from '../../contexts/CurrentUserContext';
+
 
 function MoviesCard({ movieCard, checkIsMovieSaved, onClickRemove, onClickLike }) {
     const pathname = window.location.pathname;
     const { nameRU, trailerLink, thumbnail, duration, image } = movieCard;
-    const { savedMovies, setSavedMovies } = useContext(currentUserContext);
     const [mainId, setMainId] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const [isMovieSaved, setIsMovieSaved] = useState('');
-
-    // console.log(savedMovies, 'savedd movies')
 
     const mainApi = new MainApi({
         baseUrl: BASE_URL_MAIN_API,
@@ -24,7 +19,6 @@ function MoviesCard({ movieCard, checkIsMovieSaved, onClickRemove, onClickLike }
     });
 
     useEffect(() => {
-        // setIsMovieSaved(checkIsMovieSaved.isMovieSaved);
         setMainId(checkIsMovieSaved.id);
     }, [checkIsMovieSaved]);
 
@@ -43,36 +37,6 @@ function MoviesCard({ movieCard, checkIsMovieSaved, onClickRemove, onClickLike }
     function handleMovieRemove() {
         onClickRemove(mainId)
     }
-
-    // function handleLikeMovie() {
-    //     const jwt = localStorage.getItem('jwt');
-    //     setIsLoading(true);
-    //     mainApi.saveMovie(movie, jwt)
-    //         .then((movieData) => {
-    //             const newSavedMovies = [...savedMovies, movieData];
-    //             setSavedMovies(newSavedMovies);
-    //             localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-    //             // setIsMovieSaved(true);
-    //         })
-    //         .catch((err) => console.log(err))
-    //         .finally(() => setIsLoading(false));
-    // };
-
-    // function handleRemoveMovie() {
-    //     const jwt = localStorage.getItem('jwt');
-    //     setIsLoading(true);
-    //     mainApi.removeMovie(mainId, jwt)
-    //         .then(() => {
-    //             const newSavedMovies = savedMovies.filter((movieData) => {
-    //                 return !(movieData._id === mainId);
-    //             });
-    //             setSavedMovies(newSavedMovies);
-    //             localStorage.setItem('savedMovies', JSON.stringify(newSavedMovies));
-    //             // setIsMovieSaved(false);
-    //         })
-    //         .catch((err) => console.log(err))
-    //         .finally(() => setIsLoading(false));
-    // };
 
 
     return (

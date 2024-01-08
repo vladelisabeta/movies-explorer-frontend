@@ -12,9 +12,6 @@ import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Profile from '../Profile/Profile';
-import SearchForm from '../SearchForm/SearchForm';
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import LoggedInHeader from '../LoggedInHeader/LoggedInHeader';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -23,7 +20,6 @@ import './App.css';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { MainApi } from '../../utils/MainApi';
 import { MoviesApi } from '../../utils/MoviesApi.js';
-// import { mainApi } from '../../utils/MainApi';
 import { BASE_URL_MAIN_API, BASE_URL_MOVIES_API } from '../../utils/consts.js'
 
 function App() {
@@ -53,31 +49,15 @@ function App() {
   const [loadingPage, setLoadingPage] = useState(true);
   //  стейт фильмов
   const [savedMovies, setSavedMovies] = useState([]);
-  // const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-  // }, [savedMovies]);
-
 
   // стейт прелоадера
   const [isLoading, setIsLoading] = useState(false);
   const [apiErrorProfile, setApiErrorProfile] = useState(false)
 
-  // const [savedMovies, setSavedMovies] = useState(getInitialState());
-
-
-  // function getInitialState() {
-  //   const savedMovies = localStorage.getItem('savedMovies');
-  //   return savedMovies ? JSON.parse(savedMovies) : [];
-  // }
-
-  // временное решение меню ??????
   const [isMenuPopupOpen, setMenuPopupOpen] = useState(false);
 
   //  упрощенная запись 
   const navigate = useNavigate();
-
 
 
   //  юз эффекты
@@ -91,7 +71,7 @@ function App() {
           setCurrentUser(userData)
           setSavedMovies(serverSavedMovies.filter((movie) => movie.owner === currentUser._id));
           setSavedMovies(serverSavedMovies)
-          console.log(savedMovies, 'in App')
+          // console.log(savedMovies, 'in App')
         })
         .catch((err) => {
           console.log(err)
@@ -102,8 +82,6 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  // console.log(isLoggedIn, 'app check')
-  // console.log(savedMovies, ' saved in app')
 
   async function checkToken() {
     const jwt = localStorage.getItem('jwt');
@@ -129,38 +107,6 @@ function App() {
   }, []);
 
 
-  // useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   console.log('jwt: первый джвт ', jwt);
-
-  //   if (jwt) {
-  //     setIsLoading(true)
-  //     mainApi
-  //       .checkToken(jwt)
-  //       .then((res) => {
-  //         setIsLoggedIn(true);
-  //         setIsLoading(false)
-  //         // navigate("/movies");
-  //         console.log(res)
-  //         console.log('isLoggedIn в конце юз эффект 2 что залогинено:', isLoggedIn);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setIsLoggedIn(false); // временное добавление проверка
-  //         handleLogOut();
-  //       })
-  //       .finally(() =>
-  //         setIsLoading(false)
-  //       )
-  //   }
-  //   // else {
-  //   //   setIsLoggedIn(false);
-  //   //   setIsLoading(false);
-  //   // }
-
-  // }, []);
-
-
   // основная логика в функциях
 
   function handleLoginUser(email, password) {
@@ -168,7 +114,7 @@ function App() {
     mainApi.signInUser(email, password)
       .then((res) => {
         localStorage.setItem('jwt', res.token);
-        console.log(res.token)
+        // console.log(res.token)
         setIsLoggedIn(true);
         navigate('/movies')
       })
@@ -186,8 +132,6 @@ function App() {
       .then((res) => {
         handleLoginUser(email, password)
         console.log('регистрация прошла успешно')
-        // // setIsLoggedIn(true)
-        // navigate('/signin')
         setIsLoggedIn(true)
         console.log(res)
       })
@@ -212,7 +156,6 @@ function App() {
   function handleUserProfileEdit(userData) {
     const jwt = localStorage.getItem('jwt');
     setIsLoading(true)
-    console.log(userData, 'в хендл профайл едит')
     mainApi.editProfile(userData, jwt)
       .then((newUserData) => {
         setCurrentUser(newUserData);
@@ -224,7 +167,6 @@ function App() {
       )
       .finally(() => setIsLoading(false));
   }
-
 
   function handleLikeMovie(movie) {
     const jwt = localStorage.getItem('jwt');
@@ -295,9 +237,6 @@ function App() {
                   onClickRemove={handleRemoveMovie}
                   onClickLike={handleLikeMovie}
                 />
-                {/* <SearchForm /> */}
-                {/* <FilterCheckbox /> */}
-                {/* <MoviesCardList /> */}
                 <Footer />
               </ProtectedRoute>
             </>

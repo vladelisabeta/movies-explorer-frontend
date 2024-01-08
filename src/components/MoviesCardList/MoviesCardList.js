@@ -1,8 +1,6 @@
 import './MoviesCardList.css'
-import React, { useState, useEffect, useContext } from 'react';
-import { currentUserContext } from '../../contexts/CurrentUserContext';
+import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import SavedMovies from '../SavedMovies/SavedMovies';
 import Preloader from '../Preloader/Preloader';
 import { cardsCounterShow } from '../../utils/consts';
 
@@ -45,8 +43,6 @@ function MoviesCardList({ savedMovies,
             ));
         }
     }
-    console.log(savedMovies, 'what is saved movies actually?')
-    console.log(savedMovies.length)
 
     useEffect(() => {
         setTotalCards(searchedOriginalMovies.length);

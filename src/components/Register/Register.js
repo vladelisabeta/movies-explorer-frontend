@@ -1,22 +1,17 @@
 import { Link } from 'react-router-dom';
 import './Register.css';
 import logo from '../../images/logo__COLOR_green.svg';
-import { useRef, useState } from 'react';
 import useFormValidation from '../../hooks/useFormValidation';
 
 function Register({ onRegister }) {
-    // const [isDisabled, setIsDisabled] = useState(false);
-
-    // const buttonDisabled = isValid ? setIsDisabled(true) : setIsDisabled(false);
 
     //  конец сбора инпутов
-    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
+    const { handleChange, validationErrors, inputValue, resetForm } = useFormValidation();
 
     // сабмит 
     function onSubmit(evt) {
         evt.preventDefault();
         onRegister(inputValue.name, inputValue.email, inputValue.password);
-        // setIsDisabled(true);
         resetForm();
     }
 

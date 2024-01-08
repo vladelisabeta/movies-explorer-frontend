@@ -3,10 +3,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { currentUserContext } from '../../contexts/CurrentUserContext';
 import useFormValidation from '../../hooks/useFormValidation';
 
-function Profile({ isLoggedIn, onLogOut, onEdit, setApiErrorProfile, apiErrorProfile }) {
-    // const currentUser = React.useContext(currentUserContext);
+function Profile({ isLoggedIn, onLogOut, onEdit, apiErrorProfile }) {
+
     const [isEditing, setIsEditing] = useState(false);
-    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
+    const { handleChange, validationErrors, inputValue, setInputValue } = useFormValidation();
     const { currentUser } = useContext(currentUserContext);
 
     function handleEditClick(evt) {
@@ -27,7 +27,6 @@ function Profile({ isLoggedIn, onLogOut, onEdit, setApiErrorProfile, apiErrorPro
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        // тут должнен быть код для отправки на сервер
         onEdit({
             name: inputValue.name,
             email: inputValue.email
@@ -40,14 +39,9 @@ function Profile({ isLoggedIn, onLogOut, onEdit, setApiErrorProfile, apiErrorPro
     const disabledButton = validationErrors.email || validationErrors.name ||
         (currentUser.email === inputValue.email && currentUser.name === inputValue.name);
 
-    // const isSaveButtonActive = disabledButton || (inputValue.name !== currentUser.name || inputValue.email !== currentUser.email);
-
     const saveButtonClassName = `profile__save-button ${disabledButton ? 'profile__save-button_disabled' : ''
         }`;
 
-
-    // !validationErrors
-    // && 
 
     return (
         <section className='profile'>

@@ -1,14 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useRef, useState, useEffect } from 'react';
 import './Login.css'
 import logo from '../../images/logo__COLOR_green.svg'
 import useFormValidation from '../../hooks/useFormValidation';
 
 function Login({ onLogin }) {
-    // const [isDisabled, setIsDisabled] = useState(false);
 
-    const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
-    // const buttonDisabled = isValid ? setIsDisabled(true) : setIsDisabled(false);
+    const { handleChange, validationErrors, inputValue, resetForm } = useFormValidation();
 
     function onSubmit(evt) {
         evt.preventDefault();
@@ -21,7 +18,6 @@ function Login({ onLogin }) {
         validationErrors.password === '' || undefined
     );
 
-    console.log(disabledButton, 'кнопка')
     const submitButtonClassName = `form__submit-button ${disabledButton ? 'form__submit-button_disabled' : ''
         }`;
 

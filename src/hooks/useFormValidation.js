@@ -5,23 +5,6 @@ function useFormValidation() {
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
 
-    // const handleChange = (evt) => {
-    //     const { name, value } = evt.target;
-
-    //     setInputValue({
-    //         ...inputValue,
-    //         [name]: value,
-    //     });
-
-    //     setValidationErrors({
-    //         ...validationErrors,
-    //         [name]: evt.target.validationMessage,
-    //     });
-
-    //     setIsValid(evt.target.closest('form').checkValidity());
-    // };
-
-
     const handleChange = (evt) => {
         const { name, value } = evt.target;
 
@@ -53,10 +36,6 @@ function useFormValidation() {
 
         setIsValid(evt.target.closest('form').checkValidity());
     };
-
-
-
-
 
     const resetForm = useCallback(
         (newValues = {}, newErrors = {}, newIsValid = false) => {

@@ -1,12 +1,9 @@
-// import './SavedMovies.css';
-import preview from '../../images/film_preview.png';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { MoviesApi } from '../../utils/MoviesApi';
 import { BASE_URL_MOVIES_API, BASE_URL_MAIN_API } from '../../utils/consts';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import { currentUserContext } from '../../contexts/CurrentUserContext';
 import SearchForm from '../SearchForm/SearchForm';
 import { MainApi } from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
@@ -27,14 +24,15 @@ function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
         }
     });
 
-    const [originalMovies, setOriginalMovies] = useState([]);
-    const [foundMovies, setFoundMovies] = useState([]);
-    const [savedSearchResults, setSavedSearchResults] = useState({ film: '', shorts: false });
+    // const [originalMovies, setOriginalMovies] = useState([]);
+    // const [foundMovies, setFoundMovies] = useState([]);
+    // const [savedSearchResults, setSavedSearchResults] = useState({ film: '', shorts: false });
     const [isLoading, setIsLoading] = useState(false);
     const [apiError, setApiError] = useState(false);
-    // const { savedMovies } = useContext(currentUserContext);
     const [movies, setMovies] = useState([]);
     const [searchError, setSearchError] = useState(false)
+
+    const [searchedOriginalMovies, setSearchedOriginalMovies] = useState([])
 
     const [searchData, setSearchData] = useState({
         searchWord: '',
@@ -58,15 +56,12 @@ function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
         return searchedMovies;
     };
 
-    console.log(savedMovies, 'What are the saved movies?');
-
     function handleSearchMovies(searchWord, isMovieShort) {
-        console.log(`Searching for ${searchWord}`);
-
         const foundMovies = optimizedSearchMovie(savedMovies, searchWord, isMovieShort);
         foundMovies.length === 0 ? setSearchError(true) : setSearchError(false);
         setMovies(foundMovies);
     };
+
 
     useEffect(() => {
         setMovies(savedMovies);
@@ -84,7 +79,6 @@ function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
         handleSearchMovies(searchData.searchWord, isChecked);
     }
 
-    const [searchedOriginalMovies, setSearchedOriginalMovies] = useState([])
 
     return (
         <>
@@ -95,7 +89,6 @@ function SavedMovies({ savedMovies, onClickRemove, onClickLike }) {
                 showSearchError={searchError}
                 setShowSearchError={setSearchError}
                 setShowApiError={setApiError}
-            // savedSearchResults={savedSearchResults}
             />
             <FilterCheckbox
                 handleChangeCheckBox={handleChangeCheckBox}

@@ -1,13 +1,10 @@
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-// import MoviesCard from '../MoviesCard/MoviesCard';
 import { useState, useEffect } from 'react';
 import { MoviesApi } from '../../utils/MoviesApi';
-import { BASE_URL_MOVIES_API, BASE_URL_MAIN_API } from '../../utils/consts';
+import { BASE_URL_MOVIES_API } from '../../utils/consts';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import SearchForm from '../SearchForm/SearchForm';
-import { MainApi } from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
-import { cardsCounterShow } from '../../utils/consts';
 
 function Movies({ savedMovies, onClickRemove, onClickLike }) {
 
@@ -17,22 +14,6 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
             'Content-Type': 'application/json'
         }
     });
-
-    const mainApi = new MainApi({
-        baseUrl: BASE_URL_MAIN_API,
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-
-    // const fixMissingPropsMovie = (movies) => {
-    //     return movies
-    //         .map((movie) => ({
-    //             image: `https://api.nomoreparties.co/${movie.image.url}`,
-    //             thumbnail: `https://api.nomoreparties.co/${movie.image.url}`,
-    //         }))
-    // };
-
 
     const fixMissingPropsMovie = (movies) => {
         return movies
@@ -51,10 +32,6 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
             }))
     };
 
-
-    // image: `https://api.nomoreparties.co/${movie.image.url}`,
-    // trailerLink: movie.trailerLink,
-    // thumbnail: `https://api.nomoreparties.co/${movie.image.url}`,
 
     // фильмы с сервера 
     const [searchedOriginalMovies, setSearchedOriginalMovies] = useState([]);
@@ -109,7 +86,6 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
                 })
                 .catch((err) => {
                     console.log(err);
-                    // setSearchError(true)
                     setApiError(true)
                 })
                 .finally(() => setIsLoading(false));
@@ -122,7 +98,6 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
     };
 
 
-
     function handleSearchResult(movies) {
         setSearchedOriginalMovies(movies);
         localStorage.setItem('storageSearchResult', JSON.stringify(movies));
@@ -130,6 +105,7 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
             ? setSearchError(true)
             : setSearchError(false)
     }
+
 
     function handleSubmitSearch(searchWord) {
         setSearchWord(searchWord);
@@ -148,11 +124,10 @@ function Movies({ savedMovies, onClickRemove, onClickLike }) {
             <SearchForm
                 handleSearch={handleSubmitSearch}
                 isLoading={isLoading}
-                showApiError={apiError} // значения булевы
+                showApiError={apiError}
                 showSearchError={searchError}
                 setShowSearchError={setSearchError}
                 setShowApiError={setApiError}
-            // значения булевы
             />
             <FilterCheckbox
                 handleChangeCheckBox={handleChangeCheckBox}
