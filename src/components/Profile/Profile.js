@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { currentUserContext } from '../../contexts/CurrentUserContext';
 import useFormValidation from '../../hooks/useFormValidation';
 
-function Profile({ onLogOut, onEdit, setApiErrorProfile, apiErrorProfile }) {
+function Profile({ isLoggedIn, onLogOut, onEdit, setApiErrorProfile, apiErrorProfile }) {
     // const currentUser = React.useContext(currentUserContext);
     const [isEditing, setIsEditing] = useState(false);
     const { handleChange, validationErrors, inputValue, setInputValue, setValidationErrors, isValid, setIsValid, resetForm } = useFormValidation();
@@ -23,7 +23,7 @@ function Profile({ onLogOut, onEdit, setApiErrorProfile, apiErrorProfile }) {
             name: currentUser.name,
             email: currentUser.email,
         });
-    }, [currentUser]);
+    }, [currentUser, isLoggedIn]);
 
     function handleSubmit(evt) {
         evt.preventDefault();

@@ -170,7 +170,6 @@ function App() {
         localStorage.setItem('jwt', res.token);
         console.log(res.token)
         setIsLoggedIn(true);
-        // setEmail(email)
         navigate('/movies')
       })
       .catch((err) => {
@@ -185,10 +184,10 @@ function App() {
     setIsLoading(true);
     mainApi.signUpUser(name, email, password)
       .then((res) => {
-        handleLoginUser()
+        handleLoginUser(email, password)
         console.log('регистрация прошла успешно')
-        // setIsLoggedIn(true)
-        navigate('/signin')
+        // // setIsLoggedIn(true)
+        // navigate('/signin')
         setIsLoggedIn(true)
         console.log(res)
       })
@@ -341,6 +340,7 @@ function App() {
                   onEdit={handleUserProfileEdit}
                   setApiErrorProfile={setApiErrorProfile}
                   apiErrorProfile={apiErrorProfile}
+                  isLoggedIn={isLoggedIn}
                 />
               </ProtectedRoute>
             </>
