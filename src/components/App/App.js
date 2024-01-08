@@ -132,7 +132,7 @@ function App() {
       .then((res) => {
         handleLoginUser(email, password)
         console.log('регистрация прошла успешно')
-        setIsLoggedIn(true)
+        // setIsLoggedIn(true)
         console.log(res)
       })
       .catch((err) => {
