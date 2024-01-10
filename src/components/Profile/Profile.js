@@ -9,6 +9,14 @@ function Profile({ isLoggedIn, onLogOut, onEdit, apiErrorProfile }) {
     const { handleChange, validationErrors, inputValue, setInputValue } = useFormValidation();
     const { currentUser } = useContext(currentUserContext);
 
+    // const [isInfoToolOpen, setIsInfoToolOpen] = useState(false);
+    // const [isSuccess, setIsSuccess] = useState(false);
+
+
+    // function closeInfoTool() {
+    //     setIsInfoToolOpen(false)
+    // }
+
     function handleEditClick(evt) {
         setIsEditing(false);
         evt.preventDefault();

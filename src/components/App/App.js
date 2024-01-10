@@ -17,6 +17,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import './App.css';
+import InfoToolPopup from '../InfoToolPopup/InfoToolPopup';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { MainApi } from '../../utils/MainApi';
 import { MoviesApi } from '../../utils/MoviesApi.js';
@@ -55,6 +56,8 @@ function App() {
   const [apiErrorProfile, setApiErrorProfile] = useState(false)
 
   const [isMenuPopupOpen, setMenuPopupOpen] = useState(false);
+
+  const [isInfoToolOpen, setIsInfoToolOpen] = useState(false);
 
   //  упрощенная запись 
   const navigate = useNavigate();
@@ -165,16 +168,30 @@ function App() {
     // setEmail('')
   }
 
+  // INFOTOOL
+  const [isSuccessEdit, setIsSuccessEdit] = useState(false);
+
+
+  function handleCloseInfoTool() {
+    setIsInfoToolOpen(false)
+  }
+
+
+
   function handleUserProfileEdit(userData) {
     const jwt = localStorage.getItem('jwt');
     setIsLoading(true)
     mainApi.editProfile(userData, jwt)
       .then((newUserData) => {
         setCurrentUser(newUserData);
+        setIsInfoToolOpen(true)
+        setIsSuccessEdit(true)
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`)
         setApiErrorProfile(true)
+        setIsInfoToolOpen(true)
+        setIsSuccessEdit(false)
       }
       )
       .finally(() => setIsLoading(false));
@@ -313,6 +330,12 @@ function App() {
             <NotFound />
           } />
         </Routes>
+
+        <InfoToolPopup
+          isSuccess={isSuccessEdit}
+          isOpen={isInfoToolOpen}
+          onClose={handleCloseInfoTool}
+        />
         {/* )} */}
       </div>
     </currentUserContext.Provider>
