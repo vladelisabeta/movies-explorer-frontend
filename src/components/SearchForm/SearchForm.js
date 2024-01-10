@@ -28,7 +28,7 @@ function SearchForm({ isLoading, showApiError, showSearchError, handleSearch, se
             storageSearchWord && setInputValue({ searchWord: storageSearchWord });
             setIsValid(true);
         } else {
-            setInputValue({ keyWord: '' });
+            setInputValue({ searchWord: '' });
         }
     }, [pathname]);
 
@@ -39,6 +39,7 @@ function SearchForm({ isLoading, showApiError, showSearchError, handleSearch, se
                     onChange={handleChange}
                     id='searchWord'
                     name='searchWord'
+                    value={inputValue.searchWord || ''}
                     placeholder='Фильм'>
                 </input>
                 <button className='search-form__input-button' type='submit' disabled={isLoading}>

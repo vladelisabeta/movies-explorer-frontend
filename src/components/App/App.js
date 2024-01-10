@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 // это надо
 
 // import ProtectedRoute from './ProtectedRoute';
@@ -59,7 +59,6 @@ function App() {
   //  упрощенная запись 
   const navigate = useNavigate();
 
-
   //  юз эффекты
   // проверка и установка излоггед ин
   useEffect(() => {
@@ -83,9 +82,22 @@ function App() {
   }, [isLoggedIn]);
 
 
+  useEffect(() => {
+    const currentRoute = localStorage.getItem('currentRoute');
+    if (currentRoute) {
+      navigate(currentRoute);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('currentRoute', window.location.pathname);
+  }, [window.location.pathname]);
+
+
   async function checkToken() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
+      setIsLoading(true)
       try {
         await mainApi.checkToken(jwt);
         setIsLoggedIn(true);
@@ -106,7 +118,7 @@ function App() {
     checkToken();
   }, []);
 
-
+  console.log(isLoggedIn, 'in app')
   // основная логика в функциях
 
   function handleLoginUser(email, password) {
@@ -223,66 +235,64 @@ function App() {
           } />
           {/* фильмы роут */}
           <Route path='/movies' element={
-            // !isLoggedIn ? <Navigate to='/' /> :
+            !isLoggedIn ? <Navigate to='/' /> :
 
-            <>
-              <ProtectedRoute isLoggedIn={isLoggedIn}>
-                <LoggedInHeader
-                  isOpen={isMenuPopupOpen}
-                  onClose={closeMenuPopup}
-                  onClickMenu={handleMenuPopupOpen}
-                />
-                <Movies
-                  savedMovies={savedMovies}
-                  onClickRemove={handleRemoveMovie}
-                  onClickLike={handleLikeMovie}
-                />
-                <Footer />
-              </ProtectedRoute>
-            </>
+              <>
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <LoggedInHeader
+                    isOpen={isMenuPopupOpen}
+                    onClose={closeMenuPopup}
+                    onClickMenu={handleMenuPopupOpen}
+                  />
+                  <Movies
+                    savedMovies={savedMovies}
+                    onClickRemove={handleRemoveMovie}
+                    onClickLike={handleLikeMovie}
+                  />
+                  <Footer />
+                </ProtectedRoute>
+              </>
           } />
           {/* сохраненные фильмы роут */}
           <Route path='/saved-movies' element={
-            // !isLoggedIn ? <Navigate to='/' /> :
+            !isLoggedIn ? <Navigate to='/' /> :
 
-            <>
-              <ProtectedRoute isLoggedIn={isLoggedIn}>
-                <LoggedInHeader
-                  isOpen={isMenuPopupOpen}
-                  onClose={closeMenuPopup}
-                  onClickMenu={handleMenuPopupOpen}
-                />
-                {/* <SearchForm /> */}
-                {/* <FilterCheckbox /> */}
-                <SavedMovies
-                  savedMovies={savedMovies}
-                  onClickRemove={handleRemoveMovie}
-                  onClickLike={handleLikeMovie}
-                />
-                <Footer />
-              </ProtectedRoute>
-            </>
+              <>
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <LoggedInHeader
+                    isOpen={isMenuPopupOpen}
+                    onClose={closeMenuPopup}
+                    onClickMenu={handleMenuPopupOpen}
+                  />
+                  <SavedMovies
+                    savedMovies={savedMovies}
+                    onClickRemove={handleRemoveMovie}
+                    onClickLike={handleLikeMovie}
+                  />
+                  <Footer />
+                </ProtectedRoute>
+              </>
 
           } />
           {/* профайл роут */}
           <Route path='/profile' element={
-            // !isLoggedIn ? <Navigate to='/' /> :
-            <>
-              <ProtectedRoute isLoggedIn={isLoggedIn}>
-                <LoggedInHeader
-                  isOpen={isMenuPopupOpen}
-                  onClose={closeMenuPopup}
-                  onClickMenu={handleMenuPopupOpen}
-                />
-                <Profile
-                  onLogOut={handleLogOut}
-                  onEdit={handleUserProfileEdit}
-                  setApiErrorProfile={setApiErrorProfile}
-                  apiErrorProfile={apiErrorProfile}
-                  isLoggedIn={isLoggedIn}
-                />
-              </ProtectedRoute>
-            </>
+            !isLoggedIn ? <Navigate to='/' /> :
+              <>
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <LoggedInHeader
+                    isOpen={isMenuPopupOpen}
+                    onClose={closeMenuPopup}
+                    onClickMenu={handleMenuPopupOpen}
+                  />
+                  <Profile
+                    onLogOut={handleLogOut}
+                    onEdit={handleUserProfileEdit}
+                    setApiErrorProfile={setApiErrorProfile}
+                    apiErrorProfile={apiErrorProfile}
+                    isLoggedIn={isLoggedIn}
+                  />
+                </ProtectedRoute>
+              </>
           } />
           {/* авторизация роут (логин) */}
           <Route path='/signin' element={
